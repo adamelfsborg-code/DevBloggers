@@ -1,0 +1,119 @@
+create table users (
+	id serial primary key,
+	is_blogger bool not null,
+	fullname varchar(100) not null,
+	profile_image varchar,
+	email varchar(100) not null,
+	password varchar not null,
+	token varchar,
+	created_at timestamp default now()
+)
+
+create table profile_banner (
+	id serial primary key,
+	user_id int not null,
+	banner_background varchar,
+	profile_position varchar default 'center',
+	foreign key(user_id) references users(id),
+	created_at timestamp default now()
+)
+
+create table profile_categories (
+	id serial primary key,
+	user_id int not null,
+	category_card_style varchar default 'sm',
+	order_by int default 1,
+	foreign key(user_id) references users(id),
+	created_at timestamp default now()
+)
+
+create table profile_blog_post (
+	id serial primary key,
+	user_id int not null,
+	limit_latest_posts int default 10,
+	order_by int default 1,
+	foreign key(user_id) references users(id),
+	created_at timestamp default now()
+)
+
+create table follow (
+	id serial primary key,
+	following_user int not null,
+	follower_user int not null,
+	foreign key(following_user) references users(id),
+	foreign key(follower_user) references users(id),
+	created_at timestamp default now()
+)
+
+create table category (
+	id serial primary key,
+	user_id int not null,
+	categiry_name varchar(100) not null,
+	category_img varchar,
+	category_icon varchar,
+	foreign key(user_id) references users(id),
+	created_at timestamp default now()
+)
+
+create table posts (
+	id serial primary key,
+	user_id int not null,
+	headline varchar,
+	opening varchar,
+	image varchar,
+	pharagraph1 json,
+	pharagraph2 json,
+	pharagraph3 json,
+	pharagraph4 json,
+	end varchar,
+	links json,
+	foreign key(user_id) references users(id),
+	created_at timestamp default now()
+)
+
+create table comments (
+	id serial primary key,
+	user_id int not null,
+	post_id int not null,
+	comment varchar(150) not null,
+	foreign key(user_id) references users(id),
+	foreign key(post_id) references posts(id),
+	created_at timestamp default now()
+)
+
+create table likes (
+	id serial primary key,
+	user_id int not null,
+	post_id int not null,
+	foreign key(user_id) references users(id),
+	foreign key(post_id) references posts(id),
+	created_at timestamp default now()
+)
+
+create table trending_post (
+	id serial primary key,
+	user_id int not null,
+	post_id int not null,
+	foreign key(user_id) references users(id),
+	foreign key(post_id) references posts(id),
+	created_at timestamp default now()
+)
+
+create table trending_category (
+	id serial primary key,
+	user_id int not null,
+	category_id int not null,
+	foreign key(user_id) references users(id),
+	foreign key(category_id) references category(id),
+	created_at timestamp default now()
+)
+
+create table trending_blogger (
+	id serial primary key,
+	user_id int not null,
+	blogger_id int not null,
+	foreign key(user_id) references users(id),
+	foreign key(blogger_id) references users(id),
+	created_at timestamp default now()
+)
+
