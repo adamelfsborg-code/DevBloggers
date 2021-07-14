@@ -48,8 +48,10 @@ const renderLoginPage = () => {
 
     postData("login-user/", { email: email, password: password }).then(
       (response) => {
-        if (response.ok) {
-          console.log("User Logged In");
+        if (response === "Logged in") {
+          window.location.href = "/";
+        } else {
+          showMessage("notvalid", response);
         }
       }
     );
@@ -72,12 +74,12 @@ const renderRegisterPage = () => {
   <div className="row">
     <div className="col-12">
       <div class="form-check form-switch mt-3">
-        <input class="form-check-input" type="checkbox" id="is_blogger" checked>
-        <label class="form-check-label" for="is_blogger">Register as a DevBlogger?</label>
+        <input class="form-check-input" type="checkbox" id="is_blogger">
+        <label class="form-check-label" for="is_blogger">Register as a blogger?</label>
       </div>
     </div>
     <div class="col mt-3">
-      <label for="username" class="form-label">Username</label>
+      <label for="username" class="form-label username">Username</label>
       <input type="text" class="form-control form-control-sm" id="username">
     </div>
     <div class="col mt-3">
@@ -85,20 +87,66 @@ const renderRegisterPage = () => {
       <input type="text" class="form-control form-control-sm" id="fullname">
     </div> 
     <div class="col mt-3">
-      <label for="email" class="form-label">Email address</label>
+      <label for="email" class="form-label email">Email address</label>
       <input type="email" class="form-control form-control-sm" id="email">
     </div>
     <div class="col mt-3">
-      <label for="password" class="form-label">Password</label>
+      <label for="password" class="form-label password">Password</label>
       <input type="password" class="form-control form-control-sm" id="password">
-    </div>
-    <div class="col mt-3">
-      <label for="profileimage" class="form-label">Profile image(URL)</label>
-      <input type="text" class="form-control form-control-sm" id="profileimage">
     </div>
   </div>`;
 
   $(".body").append(form);
+
+  $("#username").focusout(function () {
+    postData("check-if-username-exists/", {
+      username: $("#username").val(),
+    }).then((response) => {
+      $(".col").find(".username").empty();
+      if (response === "Username does already exists") {
+        $(".col").find(".username").append(response).addClass("text-danger");
+      } else {
+        $(".col")
+          .find(".username")
+          .append("Username")
+          .removeClass("text-danger");
+      }
+    });
+  });
+  $("#email").focusout(function () {
+    postData("check-if-email-exists/", {
+      email: $("#email").val(),
+    }).then((response) => {
+      $(".col").find(".email").empty();
+      if (response === "Email does already exists") {
+        $(".col").find(".email").append(response).addClass("text-danger");
+      } else {
+        $(".col")
+          .find(".email")
+          .append("Email address")
+          .removeClass("text-danger");
+      }
+    });
+  });
+
+  $("#password").focusout(function () {
+    postData("validate-password/", {
+      password: $("#password").val(),
+    }).then((response) => {
+      $(".col").find(".password").empty();
+      if (response.is_valid !== true) {
+        $(".col")
+          .find(".password")
+          .append(response.arg)
+          .addClass("text-danger");
+      } else {
+        $(".col")
+          .find(".password")
+          .append("Password")
+          .removeClass("text-danger");
+      }
+    });
+  });
 
   $(".auth-register").on("click", function () {
     const is_blogger = $("#is_blogger").prop("checked");
@@ -106,19 +154,33 @@ const renderRegisterPage = () => {
     const fullname = $("#fullname").val();
     const email = $("#email").val();
     const password = $("#password").val();
-    const profile_image = $("#profileimage").val();
-    console.log(fullname, email, password, profile_image);
-    postData("post-user/", {
-      is_blogger: is_blogger,
-      username: username,
-      full_name: fullname,
-      email: email,
-      password: password,
-      profile_image: profile_image,
-    }).then((response) => {
-      if (response.ok) {
-        console.log("account created");
-      }
-    });
+
+    const isValid = $(".authinformation").find(".text-danger");
+    if (isValid.length === 0) {
+      postData("post-user/", {
+        is_blogger: is_blogger,
+        username: username,
+        full_name: fullname,
+        email: email,
+        password: password,
+      }).then((response) => {
+        if (response === "Account Created") {
+          showMessage("success", response);
+          clearForms();
+          authSwitch(1);
+        } else {
+          showMessage("error", response);
+        }
+      });
+    } else {
+      showMessage("notvalid", "Not valid. Fix it and try again :)");
+    }
   });
 };
+
+function clearForms() {
+  $(":input")
+    .not(":button, :submit, :reset, :hidden, :checkbox, :radio")
+    .val("");
+  $(":checkbox, :radio").prop("checked", false);
+}

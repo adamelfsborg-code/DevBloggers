@@ -11,4 +11,71 @@ body {
     rgba(222, 247, 254, 1) 100%
   );
   font-family: "Montserrat", sans-serif;
+  color: #363837;
+}
+
+#showmessagemodal .modal-content {
+  background-color: rgba(218, 228, 238, 0.9) !important;
+  background-color: radial-gradient(
+    circle,
+    rgba(218, 228, 238, 1) 0%,
+    rgba(232, 244, 247, 1) 100%,
+    rgba(222, 247, 254, 1) 100%
+  ) !important;
+}
+
+.wrapper {
+  margin: 1% 5%;
+}
+
+.navbar-wrapper {
+  background-color: rgba(218, 228, 238, 0.9);
+  box-shadow: 0px 2px 3px 2px rgba(0, 0, 0, 0.1);
+}
+
+.navbar {
+  padding: 0.5rem;
+  margin: 0 5%;
+}
+
+.logo h5 {
+  margin-top: 0.5rem;
+}
+
+.menu {
+  width: 50%;
+}
+
+.menu ul {
+  display: flex;
+  justify-content: center;
+  list-style: none;
+  margin-top: 1rem;
+}
+
+.menu ul li a {
+  text-decoration: none;
+  color: #363837;
+  font-weight: bolder;
+  padding: 0.5rem;
+  margin-right: 0.5rem;
+  cursor: pointer;
+}
+
+.profile {
+  display: flex;
+  justify-content: space-between;
+}
+
+.profile a {
+  color: #363837 !important;
+  text-decoration: none;
+}
+
+.profile .user {
+  display: flex;
+}
+
+.profile .user span {
+  margin-right: 0.5rem;
 }
