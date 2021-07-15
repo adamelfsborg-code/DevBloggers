@@ -53,22 +53,6 @@ class LoginUser(APIView):
             return Response('Logged in', status=status.HTTP_200_OK)
         return Response('Email or password is incorrect') 
 
-class LogoutUser(APIView):
-    def post(self, request):
-        if not self.request.session.exists(self.request.session.session_key):
-            return render(request, 'authentication/auth.html')
-        
-        userid = request.data.get('id')
-
-        u = auth.User()
-        user = u.logoutUser(userid)
-        
-        if 'no results to fetch' in user:
-            self.request.session.delete()
-
-            return Response('Logged out',status=status.HTTP_200_OK)
-        return Response('Could not logout', status=status.HTTP_400_BAD_REQUEST) 
-
 class CheckIfUsernameExists(APIView):
     def post(self, request):
 

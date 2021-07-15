@@ -1,0 +1,120 @@
+{% extends 'base/index.html' %} {% load static %} {% block styles %}
+<style>
+  .profile-container {
+    height: 90vh;
+    position: relative;
+  }
+  .profile-body {
+    height: calc(90vh - 2.4rem);
+  }
+  .profile-menu {
+    border-right: 1px solid #ddd;
+  }
+  .profile-user img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 150px;
+    height: 150px;
+    margin-top: 1rem;
+    border-radius: 50%;
+    box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.2);
+  }
+  .profile-user h5 {
+    margin-top: 0.5rem;
+  }
+  .profile-buttons {
+    position: absolute;
+    bottom: 2%;
+    left: 3%;
+  }
+  .profile-links {
+    margin-top: 3rem;
+  }
+  .profile-links ul {
+    list-style: none;
+    text-align: center;
+    padding: 0;
+  }
+  .profile-links ul li {
+    background-color: var(--text-color-white);
+    padding: 0.5rem;
+    margin: 0.5rem 0;
+    cursor: pointer;
+    border-radius: 10px;
+  }
+  .profile-links ul li a {
+    text-decoration: none;
+    color: var(--text-color);
+    width: 200px !important;
+  }
+  .profile-links ul li.active {
+    background-color: var(--primary-color);
+  }
+  .profile-links ul li:hover {
+    background-color: var(--primary-color);
+  }
+</style>
+{% endblock styles %} {% block content %}
+<div class="container bg-white border profile-container">
+  <div class="row profile-header border-bottom">
+    <div class="col-9 offset-3 p-0">
+      <h5 class="text-center mt-1">{{ page_name }}</h5>
+    </div>
+  </div>
+  <div class="row profile-body">
+    <div class="col-3 profile-menu">
+      <div class="profile-user">
+        <img
+          class="text-center"
+          src="{% if profile_image  %}{{profile_image}}{% else %}/static/img/default.jpg{% endif %}"
+          alt="profile-image"
+        />
+        <h5 class="text-center">{{username}}</h5>
+        {% if is_blogger %}
+        <div class="text-center">
+          <span class="badge bg-primary">Blogger</span>
+        </div>
+        {% endif %}
+      </div>
+      <div class="profile-links">
+        <ul>
+          {% if is_blogger %}
+          <li {% if page_name == "Your Blog" %} class="active" {% endif %}>
+            <a href="/profile/">Your Blog</a>
+          </li>
+          <li {% if page_name == "Inbox" %} class="active" {% endif %}><a href="/profile/inbox/">Inbox</a></li>
+          <li {% if page_name == "Statistics" %} class="active" {% endif %}><a href="/profile/statistics/">Statistics</a></li>
+          <li {% if page_name == "Collection" %} class="active" {% endif %}><a href="/profile/collection">Collection</a></li>
+          <li {% if page_name == "Edit Profile" %} class="active" {% endif %}><a href="/profile/edit-profile/">Edit Profile</a></li>
+          <li {% if page_name == "Settings" %} class="active" {% endif %}><a href="/profile/settings/">Settings</a></li>
+          {% else %}
+          <li {% if page_name == "Inbox" %} class="active" {% endif %}><a href="/profile/">Inbox</a></li>
+          <li {% if page_name == "Edit Profile" %} class="active" {% endif %}><a href="/profile/edit-profile/">Edit Profile</a></li>
+          <li {% if page_name == "Settings" %} class="active" {% endif %}><a href="/profile/settings/">Settings</a></li>
+          {% endif %}
+        </ul>
+      </div>
+      <div class="profile-buttons">
+        <button
+          type="button"
+          onclick="javascript: logout()"
+          class="btn btn-outline-secondary btn-sm"
+        >
+          Logout
+        </button>
+        <button type="button" class="btn btn-outline-danger btn-sm">
+          Delete Account
+        </button>
+      </div>
+    </div>
+    <div class="col-9 profile-page">
+      {% block profilepage %} hej {% endblock profilepage %}
+    </div>
+  </div>
+</div>
+{% endblock content %} {% block scripts %} {{ showmessagemodal }}
+
+<script src="{% static 'js/profile.js' %}"></script>
+<script src="{% static 'js/routes.js' %}"></script>
+{% endblock scripts %}

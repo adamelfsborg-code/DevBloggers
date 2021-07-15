@@ -22,7 +22,6 @@
   </head>
   <body>
     <input type="hidden" class="userid" id="{{id}}" />
-
     <div class="container-fluid navbar-wrapper p-0">
       <div class="row navbar p-0">
         <div class="col-2 logo p-0">
@@ -30,21 +29,21 @@
         </div>
         <div class="col-8 menu p-0">
           <ul>
-            <li><a href="">Latest Blogs</a></li>
-            <li><a href="">Popular</a></li>
-            <li><a href="">Followers</a></li>
+            <li><a href="/latest-blogs">Latest Blogs</a></li>
+            <li><a href="/popular">Popular</a></li>
+            <li><a href="/followers?id={{id}}">Followers</a></li>
+            <li>
+              <a href=""><i class="fas fa-search"></i></a>
+            </li>
           </ul>
         </div>
-
         <div class="col-2 profile p-0">
           {% if id %}
-          <a href=""><i class="fas fa-search"></i></a>
 
           <div class="user">
-            <span>
-              {{username }} {% if is_blogger %} <strong>Dev</strong> {% endif %}
-            </span>
-            <a href=""><i class="fas fa-user"></i></a>
+            <a href="/profile">
+              <span> {{username }} <i class="fas fa-user"></i></span>
+            </a>
           </div>
           {% endif %}
         </div>
@@ -55,8 +54,8 @@
       <span></span>
       <button
         type="button"
-        onclick="javascript: logout()"
-        class="btn btn-outline-primary"
+        onclick="javascript: logout('logout-user/')"
+        class="btn btn-primary btn-sm"
       >
         Logout
       </button>
