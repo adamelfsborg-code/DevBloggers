@@ -16,7 +16,7 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
     />
     <link rel="stylesheet" href="{% static 'css/base.css' %}" />
-    <title>DevBloggers</title>
+    <title>DevBloggers {% if page_name %} | {{ page_name }} {% endif %}</title>
 
     {% block styles %} {% endblock styles %}
   </head>
@@ -42,25 +42,14 @@
 
           <div class="user">
             <a href="/profile">
-              <span> {{username }} <i class="fas fa-user"></i></span>
+              <span><i class="fas fa-user"></i></span>
             </a>
           </div>
           {% endif %}
         </div>
       </div>
     </div>
-    <div class="wrapper">
-      {% block content %}
-      <span></span>
-      <button
-        type="button"
-        onclick="javascript: logout('logout-user/')"
-        class="btn btn-primary btn-sm"
-      >
-        Logout
-      </button>
-      {% endblock content %}
-    </div>
+    <div class="wrapper">{% block content %} {% endblock content %}</div>
 
     {{ showmessagemodal }}
 
@@ -77,6 +66,8 @@
     <script src="{% static 'js/fetch.js' %}"></script>
     <script src="{% static 'js/logout.js' %}"></script>
     <script src="{% static 'js/showMessage.js' %}"></script>
+    <script src="{% static 'js/navigation.js' %}"></script>
+    <script src="{% static 'js/date.js' %}"></script>
     {% block scripts %} {% endblock scripts %}
   </body>
 </html>

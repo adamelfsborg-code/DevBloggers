@@ -13,7 +13,9 @@ class AuthenticationView(View):
         
         showmessagemodal = get_template('base/show-messge-modal.html').render()
 
-        return render(request, 'authentication/auth.html',{'showmessagemodal': showmessagemodal})
+        page_name = 'Authentication'
+
+        return render(request, 'authentication/auth.html',{'showmessagemodal': showmessagemodal, 'page_name': page_name})
         
 
 class PostUser(APIView):

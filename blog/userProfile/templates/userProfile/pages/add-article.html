@@ -1,0 +1,18 @@
+{% extends 'userProfile/profile.html' %} {% load static %} {% block profilepage %}
+
+<div id="editorjs"></div>
+
+<button type="button" id="upload-article" class="btn btn-primary btn-sm">
+  Upload Article
+</button>
+{% endblock profilepage %} {% block scripts %}
+<script src="https://cdn.jsdelivr.net/npm/@editorjs/editorjs@latest"></script>
+<script src="https://cdn.jsdelivr.net/npm/@editorjs/header@latest"></script>
+<script src="https://cdn.jsdelivr.net/npm/@editorjs/raw"></script>
+<script src="https://cdn.jsdelivr.net/npm/@editorjs/table"></script>
+<script src="https://cdn.jsdelivr.net/npm/@editorjs/simple-image@latest"></script>
+<script src="https://cdn.jsdelivr.net/npm/@editorjs/checklist@latest"></script>
+<script src="https://cdn.jsdelivr.net/npm/@editorjs/list@latest"></script>
+<script src="https://cdn.jsdelivr.net/npm/@editorjs/quote@latest"></script>
+<script src="{% static 'js/text-article.js' %}"></script>
+{% endblock scripts %}

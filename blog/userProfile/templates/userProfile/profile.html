@@ -1,14 +1,16 @@
 {% extends 'base/index.html' %} {% load static %} {% block styles %}
 <style>
   .profile-container {
-    height: 90vh;
+    min-height: 90vh;
     position: relative;
   }
   .profile-body {
     height: calc(90vh - 2.4rem);
+    overflow-y: auto;
   }
   .profile-menu {
     border-right: 1px solid #ddd;
+    position: sticky;
   }
   .profile-user img {
     display: block;
@@ -26,10 +28,10 @@
   .profile-buttons {
     position: absolute;
     bottom: 2%;
-    left: 3%;
+    left: 4%;
   }
   .profile-links {
-    margin-top: 3rem;
+    margin-top: 1rem;
   }
   .profile-links ul {
     list-style: none;
@@ -53,6 +55,20 @@
   }
   .profile-links ul li:hover {
     background-color: var(--primary-color);
+  }
+
+  #editorjs {
+    background-color: #fff;
+    margin-bottom: 5rem;
+    min-height: 71vh;
+  }
+  .profile-page {
+    position: relative;
+  }
+  #upload-article {
+    position: absolute;
+    bottom: 2%;
+    right: 2%;
   }
 </style>
 {% endblock styles %} {% block content %}
@@ -80,18 +96,18 @@
       <div class="profile-links">
         <ul>
           {% if is_blogger %}
-          <li {% if page_name == "Your Blog" %} class="active" {% endif %}>
-            <a href="/profile/">Your Blog</a>
-          </li>
-          <li {% if page_name == "Inbox" %} class="active" {% endif %}><a href="/profile/inbox/">Inbox</a></li>
-          <li {% if page_name == "Statistics" %} class="active" {% endif %}><a href="/profile/statistics/">Statistics</a></li>
-          <li {% if page_name == "Collection" %} class="active" {% endif %}><a href="/profile/collection">Collection</a></li>
-          <li {% if page_name == "Edit Profile" %} class="active" {% endif %}><a href="/profile/edit-profile/">Edit Profile</a></li>
-          <li {% if page_name == "Settings" %} class="active" {% endif %}><a href="/profile/settings/">Settings</a></li>
+          <li onclick="javascript: navigate('/profile/')" {% if page_name == "Your Blog" %} class="active" {% endif %}>Your Blog</li>
+          <li onclick="javascript: navigate('/profile/add-article/')" {% if page_name == "Add Article" %} class="active" {% endif %}>Add Article</li>
+          <li onclick="javascript: navigate('/profile/add-category/')" {% if page_name == "Add Category" %} class="active" {% endif %}>Add Category</li>
+          <li onclick="javascript: navigate('/profile/inbox/')" {% if page_name == "Inbox" %} class="active" {% endif %}>Inbox</li>
+          <li onclick="javascript: navigate('/profile/statistics/')" {% if page_name == "Statistics" %} class="active" {% endif %}>Statistics</li>
+          <li onclick="javascript: navigate('/profile/collection')" {% if page_name == "Collection" %} class="active" {% endif %}>Collection</li>
+          <li onclick="javascript: navigate('/profile/edit-profile/')" {% if page_name == "Edit Profile" %} class="active" {% endif %}>Edit Profile</li>
+          <li onclick="javascript: navigate('/profile/settings/')" {% if page_name == "Settings" %} class="active" {% endif %}>Settings</li>
           {% else %}
-          <li {% if page_name == "Inbox" %} class="active" {% endif %}><a href="/profile/">Inbox</a></li>
-          <li {% if page_name == "Edit Profile" %} class="active" {% endif %}><a href="/profile/edit-profile/">Edit Profile</a></li>
-          <li {% if page_name == "Settings" %} class="active" {% endif %}><a href="/profile/settings/">Settings</a></li>
+          <li onclick="javascript: navigate('/profile/')" {% if page_name == "Inbox" %} class="active" {% endif %}>Inbox</li>
+          <li onclick="javascript: navigate('/profile/edit-profile/')" {% if page_name == "Edit Profile" %} class="active" {% endif %}>Edit Profile</li>
+          <li onclick="javascript: navigate('/profile/settings/')" {% if page_name == "Settings" %} class="active" {% endif %}>Settings</li>
           {% endif %}
         </ul>
       </div>
@@ -108,13 +124,12 @@
         </button>
       </div>
     </div>
-    <div class="col-9 profile-page">
+    <div class="col-9 profile-page p-0">
       {% block profilepage %} hej {% endblock profilepage %}
     </div>
   </div>
 </div>
 {% endblock content %} {% block scripts %} {{ showmessagemodal }}
-
 <script src="{% static 'js/profile.js' %}"></script>
 <script src="{% static 'js/routes.js' %}"></script>
 {% endblock scripts %}

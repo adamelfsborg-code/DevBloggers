@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, HttpResponse
 from rest_framework.response import Response
 from rest_framework import generics, status
 from authentication import authentication as auth
+from . import userProfile as uP
 from django.views import View
 from rest_framework.views import APIView
 from django.template.loader import get_template
@@ -11,7 +12,7 @@ import json
 class UserProfile(View):
     def get(self, request, *args, **kwargs):
         if not self.request.session.exists(self.request.session.session_key):
-            return redirect('auth/')
+            return redirect('/auth/')
 
         showmessagemodal = get_template('base/show-messge-modal.html').render()
 
@@ -33,11 +34,54 @@ class UserProfile(View):
         
         page_name = 'Inbox'
         return render(request, 'userProfile/pages/inbox.html',{'id': id, 'username': username, 'fullname': fullname, 'profile_image': profile_image, 'is_blogger': is_blogger,'showmessagemodal': showmessagemodal, 'page_name': page_name })
-        
-class Inbox(APIView):
+
+class AddArticle(View):
     def get(self, request, *args, **kwargs):
         if not self.request.session.exists(self.request.session.session_key):
-            return redirect('auth/')
+            return redirect('/auth/')
+
+        showmessagemodal = get_template('base/show-messge-modal.html').render()
+
+        page_name = 'Add Article' 
+
+        u = auth.User()
+        token = u.getUser(self.request.session.session_key)
+        if len(token) > 0:
+            for i,a in enumerate(token):
+                id = token[i]['id']
+                username = token[i]['username']
+                fullname = token[i]['fullname']
+                profile_image = token[i]['profile_image']
+                is_blogger = token[i]['is_blogger']
+
+        return render(request, 'userProfile/pages/add-article.html',{'id': id, 'username': username, 'fullname': fullname, 'profile_image': profile_image, 'is_blogger': is_blogger,'showmessagemodal': showmessagemodal, 'page_name': page_name })
+           
+class AddCategory(View):
+    def get(self, request, *args, **kwargs):
+        if not self.request.session.exists(self.request.session.session_key):
+            return redirect('/auth/')
+
+        showmessagemodal = get_template('base/show-messge-modal.html').render()
+
+        page_name = 'Add Category' 
+
+        u = auth.User()
+        token = u.getUser(self.request.session.session_key)
+        if len(token) > 0:
+            for i,a in enumerate(token):
+                id = token[i]['id']
+                username = token[i]['username']
+                fullname = token[i]['fullname']
+                profile_image = token[i]['profile_image']
+                is_blogger = token[i]['is_blogger']
+
+        return render(request, 'userProfile/pages/add-category.html',{'id': id, 'username': username, 'fullname': fullname, 'profile_image': profile_image, 'is_blogger': is_blogger,'showmessagemodal': showmessagemodal, 'page_name': page_name })
+               
+
+class Inbox(View):
+    def get(self, request, *args, **kwargs):
+        if not self.request.session.exists(self.request.session.session_key):
+            return redirect('/auth/')
 
         showmessagemodal = get_template('base/show-messge-modal.html').render()
 
@@ -55,10 +99,10 @@ class Inbox(APIView):
 
         return render(request, 'userProfile/pages/inbox.html',{'id': id, 'username': username, 'fullname': fullname, 'profile_image': profile_image, 'is_blogger': is_blogger,'showmessagemodal': showmessagemodal, 'page_name': page_name })
             
-class Statistics(APIView):
+class Statistics(View):
     def get(self, request, *args, **kwargs):
         if not self.request.session.exists(self.request.session.session_key):
-            return redirect('auth/')
+            return redirect('/auth/')
 
         showmessagemodal = get_template('base/show-messge-modal.html').render()
 
@@ -76,10 +120,10 @@ class Statistics(APIView):
 
         return render(request, 'userProfile/pages/statistics.html',{'id': id, 'username': username, 'fullname': fullname, 'profile_image': profile_image, 'is_blogger': is_blogger,'showmessagemodal': showmessagemodal, 'page_name': page_name })
             
-class Collection(APIView):
+class Collection(View):
     def get(self, request, *args, **kwargs):
         if not self.request.session.exists(self.request.session.session_key):
-            return redirect('auth/')
+            return redirect('/auth/')
 
         showmessagemodal = get_template('base/show-messge-modal.html').render()
 
@@ -97,10 +141,10 @@ class Collection(APIView):
 
         return render(request, 'userProfile/pages/statistics.html',{'id': id, 'username': username, 'fullname': fullname, 'profile_image': profile_image, 'is_blogger': is_blogger,'showmessagemodal': showmessagemodal, 'page_name': page_name })
 
-class EditProfile(APIView):
+class EditProfile(View):
     def get(self, request, *args, **kwargs):
         if not self.request.session.exists(self.request.session.session_key):
-            return redirect('auth/')
+            return redirect('/auth/')
 
         showmessagemodal = get_template('base/show-messge-modal.html').render()
 
@@ -118,10 +162,10 @@ class EditProfile(APIView):
 
         return render(request, 'userProfile/pages/statistics.html',{'id': id, 'username': username, 'fullname': fullname, 'profile_image': profile_image, 'is_blogger': is_blogger,'showmessagemodal': showmessagemodal, 'page_name': page_name })
             
-class Settings(APIView):
+class Settings(View):
     def get(self, request, *args, **kwargs):
         if not self.request.session.exists(self.request.session.session_key):
-            return redirect('auth/')
+            return redirect('/auth/')
 
         showmessagemodal = get_template('base/show-messge-modal.html').render()
 
@@ -144,7 +188,7 @@ class Settings(APIView):
 class LogoutUser(APIView):
     def post(self, request):
         if not self.request.session.exists(self.request.session.session_key):
-            return render(request, 'authentication/auth.html')
+            return redirect('/auth/')
         
         userid = request.data.get('id')
 
@@ -156,3 +200,54 @@ class LogoutUser(APIView):
 
             return Response('Logged out',status=status.HTTP_200_OK)
         return Response('Could not logout', status=status.HTTP_400_BAD_REQUEST) 
+
+class UploadArticle(APIView):
+    def post(self, request):
+        if not self.request.session.exists(self.request.session.session_key):
+            return redirect('/auth/')
+
+        blocks = json.dumps(request.data.get('blocks'))
+
+        kwargs = {
+            'article_id': request.data.get('article_id', ''),
+            'user_id': request.data.get('user_id'),
+            'publish_date': request.data.get('publish_date'),
+            'blocks': blocks,
+        }
+
+        u = uP.Profile()
+        profile = u.addArticle(**kwargs)
+
+        if len(profile) > 0:
+            for i in profile:
+                if 'article_updated' not in i:
+                    id = i.get('id')
+                    return Response({'msg': 'Article Uploaded', 'id': id  },status=status.HTTP_200_OK) 
+                return Response({'msg': 'Article Updated'},status=status.HTTP_200_OK) 
+            return Response('Artilce Not Uploaded', status=status.HTTP_400_BAD_REQUEST)
+
+class CreateCategory(APIView):
+    def post(self, request):
+        if not self.request.session.exists(self.request.session.session_key):
+            return redirect('/auth/')
+
+        kwargs = {
+            'id': request.data.get('id', ''),
+            'user_id': request.data.get('user_id'),
+            'name': request.data.get('name'),
+            'icon': request.data.get('icon'),
+            'background_color': request.data.get('background_color'),
+            'text_color': request.data.get('text_color'),
+        }        
+
+        u = uP.Profile()
+        profile = u.addCategory(**kwargs)
+
+        if len(profile) > 0:
+            for i in profile:
+                if 'category_updated' not in profile:
+                    id = i.get('id')
+                    return Response({'msg': 'Category Created', 'id': id}, status=status.HTTP_200_OK)
+                return Response({'msg': 'Category Updated'},status=status.HTTP_200_OK)
+            return Response('Category Not Created', status=status.HTTP_400_BAD_REQUEST)
+            

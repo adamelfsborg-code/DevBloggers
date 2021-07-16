@@ -1,7 +1,6 @@
 from base import db
 
 class User:
-
     def getUser(self, token):
         sql = "SELECT id,is_blogger,profile_image,fullname,username,email FROM users WHERE token=%s"
         sqldata = (token,)
