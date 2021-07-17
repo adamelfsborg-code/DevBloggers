@@ -60,19 +60,45 @@
   #editorjs {
     background-color: #fff;
     margin-bottom: 5rem;
-    min-height: 71vh;
+    min-height: 62vh;
   }
   .profile-page {
     position: relative;
   }
-  #upload-article {
+  #upload_article {
     position: absolute;
     bottom: 2%;
     right: 2%;
   }
+  #reset_addarticle {
+    position: absolute;
+    bottom: 2%;
+    right: 15%;
+  }
+  .ce-block__content {
+    background-color: #F8F8FF;
+    padding: 0rem 2rem;
+  }
+  .profile-header {
+    position: relative;
+  }
+  .helper {
+    position: absolute;
+    right: 2%;
+    top: 0.7%;
+    z-index: 200;
+  }
+  .helper i {
+    cursor: pointer;
+    font-size: 18px;
+    
+  }
 </style>
 {% endblock styles %} {% block content %}
 <div class="container bg-white border profile-container">
+  <div class="helper" onclick="javascript: showMessage('info', 'Press on the white area and then tab to get the toolbar')" >
+    <i class="far fa-question-circle"></i>
+  </div>
   <div class="row profile-header border-bottom">
     <div class="col-9 offset-3 p-0">
       <h5 class="text-center mt-1">{{ page_name }}</h5>

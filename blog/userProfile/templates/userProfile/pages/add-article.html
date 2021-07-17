@@ -1,10 +1,23 @@
 {% extends 'userProfile/profile.html' %} {% load static %} {% block profilepage %}
 
+<div class="col-8 offset-2 mb-2 mt-2 p-1">
+  <label for="category" class="form-label">Category</label>
+  <select id="category" class="form-select form-select-sm"></select>
+</div>
+
 <div id="editorjs"></div>
 
-<button type="button" id="upload-article" class="btn btn-primary btn-sm">
+<button
+  type="button"
+  id="reset_addarticle"
+  class="btn btn-success btn-sm mt-3 mr-2 ml-2 d-none"
+>
+  Finished?
+</button>
+<button type="button" id="upload_article" class="btn btn-primary btn-sm">
   Upload Article
 </button>
+
 {% endblock profilepage %} {% block scripts %}
 <script src="https://cdn.jsdelivr.net/npm/@editorjs/editorjs@latest"></script>
 <script src="https://cdn.jsdelivr.net/npm/@editorjs/header@latest"></script>

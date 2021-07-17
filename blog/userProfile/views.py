@@ -212,11 +212,12 @@ class UploadArticle(APIView):
             'article_id': request.data.get('article_id', ''),
             'user_id': request.data.get('user_id'),
             'publish_date': request.data.get('publish_date'),
+            'category_id': request.data.get('category_id'),
             'blocks': blocks,
         }
 
         u = uP.Profile()
-        profile = u.addArticle(**kwargs)
+        profile = u.add_article(**kwargs)
 
         if len(profile) > 0:
             for i in profile:
@@ -241,13 +242,27 @@ class CreateCategory(APIView):
         }        
 
         u = uP.Profile()
-        profile = u.addCategory(**kwargs)
+        profile = u.add_category(**kwargs)
 
         if len(profile) > 0:
             for i in profile:
-                if 'category_updated' not in profile:
+                if 'category_updated' not in i:
+                    print(profile)
                     id = i.get('id')
                     return Response({'msg': 'Category Created', 'id': id}, status=status.HTTP_200_OK)
                 return Response({'msg': 'Category Updated'},status=status.HTTP_200_OK)
             return Response('Category Not Created', status=status.HTTP_400_BAD_REQUEST)
-            
+
+class GetUserCategories(APIView):
+    def post(self, request):
+        if not self.request.session.exists(self.request.session.session_key):
+            return redirect('/auth/')
+        
+        user_id = request.data.get('user_id')
+
+        u = uP.Profile()
+        profile = u.get_user_categories(user_id)
+
+        if len(profile) > 0:
+            return Response({'msg': '200', 'items': profile}, status=status.HTTP_200_OK)
+        return Response({'msg': 'Categories not found'},status=status.HTTP_200_OK)

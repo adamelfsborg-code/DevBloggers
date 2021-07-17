@@ -17,6 +17,8 @@ $("#text_color").on("input", function () {
   $(".category-card")
     .find("i,span")
     .css("color", `${$(this).val()}`);
+  $(".category-card").removeClass("d-none");
+  $("h6").removeClass("d-none");
 });
 
 $("#create_category").on("click", function () {
@@ -35,10 +37,12 @@ $("#create_category").on("click", function () {
       background_color: background_color,
       text_color: text_color,
     }).then((response) => {
+      console.log(response);
       if (response.msg === "Category Created") {
         $(".category_id").attr("id", response.id);
         showMessage("success", response.msg);
         $("#create_category").html("Edit Category");
+        $("#reset_addcategory").removeClass("d-none");
       } else if (response.msg === "Category Updated") {
         showMessage("success", response.msg);
       } else {
@@ -46,4 +50,16 @@ $("#create_category").on("click", function () {
       }
     });
   }
+});
+
+$("#reset_addcategory").on("click", function () {
+  clearForms();
+  $(".category_id").removeAttr("id");
+  $("#category_icon").val(0).attr("disabled", false).attr("selected", true);
+  $("#create_category").html("Create Category");
+  $(".category-card").find("span").html("");
+  $(".category-card").find(".icon").html("");
+  $(".category-card").addClass("d-none");
+  $("h6").addClass("d-none");
+  $("#reset_addcategory").addClass("d-none");
 });

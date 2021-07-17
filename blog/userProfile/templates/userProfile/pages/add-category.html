@@ -13,7 +13,7 @@
 <div class="col-10 offset-1 mt-2">
   <label for="category_icon" class="form-label">Category Icon</label>
   <select class="form-select form-select-sm" id="category_icon">
-    <option selected disabled>Select icon</option>
+    <option selected disabled value="0">Select icon</option>
     <option value="fab fa-python">Python</option>
     <option value="fab fa-js">Javascript</option>
     <option value="fab fa-css3">Css</option>
@@ -28,26 +28,35 @@
     type="color"
     class="form-control form-control-color"
     id="background_color"
-    value="#ffffff"
+    value="#000000"
   />
   <label for="text_color" class="form-label mt-2">Text Color</label>
   <input
     type="color"
     class="form-control form-control-color"
     id="text_color"
-    value="#ffffff"
+    value="#000000"
   />
-  <button
-    type="button"
-    id="create_category"
-    class="btn btn-primary btn-sm mt-3 col-3 offset-9"
-  >
-    Create Category
-  </button>
+  <div class="d-flex justify-content-end">
+    <button
+      type="button"
+      id="reset_addcategory"
+      class="btn btn-success btn-sm mt-3 mr-2 ml-2 d-none"
+    >
+      Finished?
+    </button>
+    <button
+      type="button"
+      id="create_category"
+      class="btn btn-primary btn-sm mt-3 offset-1"
+    >
+      Add Category
+    </button>
+  </div>
 
-  <h6 class="text-center mt-5">Preview</h6>
+  <h6 class="text-center mt-5 d-none">Preview</h6>
   <div class="live-category-preview d-flex justify-content-center">
-    <div class="category-card w-25 p-2 rounded d-flex">
+    <div class="category-card w-25 p-2 rounded d-flex d-none">
       <div class="icon" style="width: 30px"></div>
       <span></span>
     </div>
