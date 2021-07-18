@@ -99,53 +99,30 @@ const renderRegisterPage = () => {
   $(".body").append(form);
 
   $("#username").focusout(function () {
-    postData("check-if-username-exists/", {
-      username: $("#username").val(),
-    }).then((response) => {
-      $(".col").find(".username").empty();
-      if (response === "Username does already exists") {
-        $(".col").find(".username").append(response).addClass("text-danger");
-      } else {
-        $(".col")
-          .find(".username")
-          .append("Username")
-          .removeClass("text-danger");
-      }
-    });
+    console.log("mgeorgnme");
+    const username = $("#username").val();
+    validate(
+      "check-if-username-exists/",
+      { username: username },
+      "username",
+      "Username",
+      "Username does already exists"
+    );
   });
   $("#email").focusout(function () {
-    postData("check-if-email-exists/", {
-      email: $("#email").val(),
-    }).then((response) => {
-      $(".col").find(".email").empty();
-      if (response === "Email does already exists") {
-        $(".col").find(".email").append(response).addClass("text-danger");
-      } else {
-        $(".col")
-          .find(".email")
-          .append("Email address")
-          .removeClass("text-danger");
-      }
-    });
+    const email = $("#email").val();
+    validate(
+      "check-if-email-exists/",
+      { email: email },
+      "email",
+      "Email address",
+      "Email does already exists"
+    );
   });
 
   $("#password").focusout(function () {
-    postData("validate-password/", {
-      password: $("#password").val(),
-    }).then((response) => {
-      $(".col").find(".password").empty();
-      if (response.is_valid !== true) {
-        $(".col")
-          .find(".password")
-          .append(response.arg)
-          .addClass("text-danger");
-      } else {
-        $(".col")
-          .find(".password")
-          .append("Password")
-          .removeClass("text-danger");
-      }
-    });
+    const password = $("#password").val();
+    validatePwd("validate-password/", password);
   });
 
   $(".auth-register").on("click", function () {
@@ -177,5 +154,3 @@ const renderRegisterPage = () => {
     }
   });
 };
-
-

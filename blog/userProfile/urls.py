@@ -13,5 +13,6 @@ urlpatterns = [
     path('logout-user/', views.LogoutUser.as_view(), name='logoutuser'),
     path('upload-article/', views.UploadArticle.as_view(), name='uploadarticle'),
     path('create-category/', views.CreateCategory.as_view(), name='createcategory'),
-    path('get-user-categories/', views.GetUserCategories.as_view(), name='getusercategories')
+    path('get-user-categories/', views.GetUserCategories.as_view(), name='getusercategories'),
+    path('get-user-articles/', views.GetUserArticles.as_view(), name='getuserarticles')
 ]

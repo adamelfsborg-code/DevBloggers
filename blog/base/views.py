@@ -19,8 +19,9 @@ class BaseView(View):
                 id = token[i]['id']
                 username = token[i]['username']
                 fullname = token[i]['fullname']
+                email = token[i]['email']
                 profile_image = token[i]['profile_image']
                 is_blogger = token[i]['is_blogger']
-
-            return render(request, 'base/index.html', {'id': id, 'username': username, 'fullname': fullname, 'profile_image': profile_image, 'is_blogger': is_blogger,'showmessagemodal': showmessagemodal })
+                
+            return render(request, 'base/index.html', {'id': id, 'username': username, 'fullname': fullname, 'profile_image': profile_image, 'is_blogger': is_blogger,'email': email, 'showmessagemodal': showmessagemodal })
         return redirect('auth/')

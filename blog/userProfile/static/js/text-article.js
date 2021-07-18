@@ -1,5 +1,3 @@
-const ImageTool = window.ImageTool;
-
 $(document).on("ready", function () {
   $("#upload_article").html("Upload Article");
   const user_id = $(".userid").attr("id");

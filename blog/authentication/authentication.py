@@ -11,6 +11,7 @@ class User:
         return cursor
 
     def checkIfEmailExists(self, email):
+        print(email)
         sql = "SELECT email FROM users WHERE email=%s"
         sqldata = (email, )
 

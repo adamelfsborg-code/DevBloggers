@@ -1,2 +1,21 @@
-{% extends 'userProfile/profile.html' %} {% block profilepage %} {{page_name}}
-{% endblock profilepage %}
+{% extends 'userProfile/profile.html' %} {% load static %} {% block profilepage %}
+
+<head>
+  <link rel="stylesheet" href="{% static 'css/collection.css' %}" />
+</head>
+
+<div class="categories-collection">
+  <h5>Categories</h5>
+  <div class="grid-container"></div>
+</div>
+
+<div class="articles-collection">
+  <h5>Articles</h5>
+  <div class="container">
+    <div class="row"></div>
+  </div>
+</div>
+
+{% endblock profilepage %} {% block scripts %}
+<script src="{% static 'js/collection.js' %}"></script>
+{% endblock scripts %}

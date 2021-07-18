@@ -1,1 +1,73 @@
-{% extends 'userProfile/profile.html' %} {% block profilepage %} {{page_name}} {% endblock profilepage %}
+{% extends 'userProfile/profile.html' %} {% load static %} {% block profilepage %}
+
+<div class="edit-profile mt-2">
+  <div class="container">
+    <div class="row d-block">
+      <div class="col mb-2">
+        <label for="username" class="form-label username">Username</label>
+        <input
+          type="text"
+          class="form-control form-control-sm"
+          id="username"
+          value="{{username}}"
+        />
+      </div>
+      <div class="col mb-2">
+        <label for="fullname" class="form-label">Fullname</label>
+        <input
+          type="text"
+          class="form-control form-control-sm"
+          id="fullname"
+          value="{{fullname}}"
+        />
+      </div>
+      <div class="col mb-2">
+        <label for="profile_image" class="form-label">Profile image</label>
+        <input
+          type="text"
+          class="form-control form-control-sm"
+          id="profile_image"
+          value="{{profile_image}}"
+        />
+      </div>
+      <div class="col mb-2">
+        <label for="email" class="form-label email">Email</label>
+        <input
+          type="email"
+          class="form-control form-control-sm"
+          id="email"
+          value="{{email}}"
+        />
+      </div>
+      <div class="col mb-2">
+        <label for="current_password" class="form-label">Current Password</label>
+        <input
+          type="password"
+          class="form-control form-control-sm"
+          id="current_password"
+        />
+      </div>
+      <div class="col mb-2">
+        <label for="password" class="form-label password">New Password</label>
+        <input
+          type="password"
+          class="form-control form-control-sm"
+          id="password"
+        />
+      </div>
+      <div class="col-12 mt-2 d-flex justify-content-end">
+        <button
+          type="button"
+          class="btn btn-primary btn-sm save-profile-changes"
+        >
+          Save changes
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock profilepage %} {% block scripts %}
+<script src="{% static 'js/profile.js' %}"></script>
+<script src="{% static 'js/validate.js' %}"></script>
+{% endblock scripts %}

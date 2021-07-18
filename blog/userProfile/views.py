@@ -25,15 +25,16 @@ class UserProfile(View):
                 id = token[i]['id']
                 username = token[i]['username']
                 fullname = token[i]['fullname']
+                email = token[i]['email']
                 profile_image = token[i]['profile_image']
                 is_blogger = token[i]['is_blogger']
 
         if is_blogger:
             page_name = 'Your Blog'
-            return render(request, 'userProfile/pages/blog-profile.html',{'id': id, 'username': username, 'fullname': fullname, 'profile_image': profile_image, 'is_blogger': is_blogger,'showmessagemodal': showmessagemodal, 'page_name': page_name })
+            return render(request, 'userProfile/pages/blog-profile.html',{'id': id, 'username': username, 'fullname': fullname, 'profile_image': profile_image, 'is_blogger': is_blogger, 'email': email, 'showmessagemodal': showmessagemodal, 'page_name': page_name })
         
         page_name = 'Inbox'
-        return render(request, 'userProfile/pages/inbox.html',{'id': id, 'username': username, 'fullname': fullname, 'profile_image': profile_image, 'is_blogger': is_blogger,'showmessagemodal': showmessagemodal, 'page_name': page_name })
+        return render(request, 'userProfile/pages/inbox.html',{'id': id, 'username': username, 'fullname': fullname, 'profile_image': profile_image, 'is_blogger': is_blogger,'email': email,'showmessagemodal': showmessagemodal, 'page_name': page_name })
 
 class AddArticle(View):
     def get(self, request, *args, **kwargs):
@@ -50,11 +51,12 @@ class AddArticle(View):
             for i,a in enumerate(token):
                 id = token[i]['id']
                 username = token[i]['username']
+                email = token[i]['email']
                 fullname = token[i]['fullname']
                 profile_image = token[i]['profile_image']
                 is_blogger = token[i]['is_blogger']
 
-        return render(request, 'userProfile/pages/add-article.html',{'id': id, 'username': username, 'fullname': fullname, 'profile_image': profile_image, 'is_blogger': is_blogger,'showmessagemodal': showmessagemodal, 'page_name': page_name })
+        return render(request, 'userProfile/pages/add-article.html',{'id': id, 'username': username, 'fullname': fullname, 'profile_image': profile_image, 'is_blogger': is_blogger,'email': email,'showmessagemodal': showmessagemodal, 'page_name': page_name })
            
 class AddCategory(View):
     def get(self, request, *args, **kwargs):
@@ -71,11 +73,12 @@ class AddCategory(View):
             for i,a in enumerate(token):
                 id = token[i]['id']
                 username = token[i]['username']
+                email = token[i]['email']
                 fullname = token[i]['fullname']
                 profile_image = token[i]['profile_image']
                 is_blogger = token[i]['is_blogger']
 
-        return render(request, 'userProfile/pages/add-category.html',{'id': id, 'username': username, 'fullname': fullname, 'profile_image': profile_image, 'is_blogger': is_blogger,'showmessagemodal': showmessagemodal, 'page_name': page_name })
+        return render(request, 'userProfile/pages/add-category.html',{'id': id, 'username': username, 'fullname': fullname, 'profile_image': profile_image, 'is_blogger': is_blogger,'email': email,'showmessagemodal': showmessagemodal, 'page_name': page_name })
                
 
 class Inbox(View):
@@ -92,12 +95,13 @@ class Inbox(View):
         if len(token) > 0:
             for i,a in enumerate(token):
                 id = token[i]['id']
+                email = token[i]['email']
                 username = token[i]['username']
                 fullname = token[i]['fullname']
                 profile_image = token[i]['profile_image']
                 is_blogger = token[i]['is_blogger']
 
-        return render(request, 'userProfile/pages/inbox.html',{'id': id, 'username': username, 'fullname': fullname, 'profile_image': profile_image, 'is_blogger': is_blogger,'showmessagemodal': showmessagemodal, 'page_name': page_name })
+        return render(request, 'userProfile/pages/inbox.html',{'id': id, 'username': username, 'fullname': fullname, 'profile_image': profile_image, 'is_blogger': is_blogger,'email': email,'showmessagemodal': showmessagemodal, 'page_name': page_name })
             
 class Statistics(View):
     def get(self, request, *args, **kwargs):
@@ -114,11 +118,12 @@ class Statistics(View):
             for i,a in enumerate(token):
                 id = token[i]['id']
                 username = token[i]['username']
+                email = token[i]['email']
                 fullname = token[i]['fullname']
                 profile_image = token[i]['profile_image']
                 is_blogger = token[i]['is_blogger']
 
-        return render(request, 'userProfile/pages/statistics.html',{'id': id, 'username': username, 'fullname': fullname, 'profile_image': profile_image, 'is_blogger': is_blogger,'showmessagemodal': showmessagemodal, 'page_name': page_name })
+        return render(request, 'userProfile/pages/statistics.html',{'id': id, 'username': username, 'fullname': fullname, 'profile_image': profile_image, 'is_blogger': is_blogger,'email': email,'showmessagemodal': showmessagemodal, 'page_name': page_name })
             
 class Collection(View):
     def get(self, request, *args, **kwargs):
@@ -135,11 +140,12 @@ class Collection(View):
             for i,a in enumerate(token):
                 id = token[i]['id']
                 username = token[i]['username']
+                email = token[i]['email']
                 fullname = token[i]['fullname']
                 profile_image = token[i]['profile_image']
                 is_blogger = token[i]['is_blogger']
 
-        return render(request, 'userProfile/pages/statistics.html',{'id': id, 'username': username, 'fullname': fullname, 'profile_image': profile_image, 'is_blogger': is_blogger,'showmessagemodal': showmessagemodal, 'page_name': page_name })
+        return render(request, 'userProfile/pages/collection.html',{'id': id, 'username': username, 'fullname': fullname, 'profile_image': profile_image, 'is_blogger': is_blogger,'email': email,'showmessagemodal': showmessagemodal, 'page_name': page_name })
 
 class EditProfile(View):
     def get(self, request, *args, **kwargs):
@@ -156,11 +162,12 @@ class EditProfile(View):
             for i,a in enumerate(token):
                 id = token[i]['id']
                 username = token[i]['username']
+                email = token[i]['email']
                 fullname = token[i]['fullname']
                 profile_image = token[i]['profile_image']
                 is_blogger = token[i]['is_blogger']
 
-        return render(request, 'userProfile/pages/statistics.html',{'id': id, 'username': username, 'fullname': fullname, 'profile_image': profile_image, 'is_blogger': is_blogger,'showmessagemodal': showmessagemodal, 'page_name': page_name })
+        return render(request, 'userProfile/pages/edit-profile.html',{'id': id, 'username': username, 'fullname': fullname, 'profile_image': profile_image, 'is_blogger': is_blogger,'email': email,'showmessagemodal': showmessagemodal, 'page_name': page_name })
             
 class Settings(View):
     def get(self, request, *args, **kwargs):
@@ -177,11 +184,12 @@ class Settings(View):
             for i,a in enumerate(token):
                 id = token[i]['id']
                 username = token[i]['username']
+                email = token[i]['email']
                 fullname = token[i]['fullname']
                 profile_image = token[i]['profile_image']
                 is_blogger = token[i]['is_blogger']
 
-        return render(request, 'userProfile/pages/statistics.html',{'id': id, 'username': username, 'fullname': fullname, 'profile_image': profile_image, 'is_blogger': is_blogger,'showmessagemodal': showmessagemodal, 'page_name': page_name })
+        return render(request, 'userProfile/pages/statistics.html',{'id': id, 'username': username, 'fullname': fullname, 'profile_image': profile_image, 'is_blogger': is_blogger,'email': email,'showmessagemodal': showmessagemodal, 'page_name': page_name })
             
 
 
@@ -266,3 +274,17 @@ class GetUserCategories(APIView):
         if len(profile) > 0:
             return Response({'msg': '200', 'items': profile}, status=status.HTTP_200_OK)
         return Response({'msg': 'Categories not found'},status=status.HTTP_200_OK)
+
+class GetUserArticles(APIView):
+    def post(self, request):
+        if not self.request.session.exists(self.request.session.session_key):
+            return redirect('/auth/')
+
+        user_id = request.data.get('user_id')
+
+        u = uP.Profile()
+        profile = u.get_user_articles(user_id)
+
+        if len(profile) > 0:
+            return Response({'msg': '200', 'items': profile}, status=status.HTTP_200_OK)
+        return Response({'msg': 'Categories not found'},status=status.HTTP_200_OK) 

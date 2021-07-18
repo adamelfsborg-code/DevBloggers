@@ -29,7 +29,16 @@ class Profile:
         return cursor
     
     def get_user_categories(self,user_id):
-        sql = "SELECT id,user_id,name FROM categories WHERE user_id=%s"
+        sql = "SELECT id,user_id,name,icon,text_color,background_color FROM categories WHERE user_id=%s"
+        sqldata = (user_id, )
+
+        c = db.cursor('blog', sql, sqldata)
+        cursor = c.connect()
+
+        return cursor
+
+    def get_user_articles(self, user_id):
+        sql = "SELECT articles.id as id,articles.user_id,blocks,publish_date,categories.id as category_id, categories.name, categories.background_color, categories.text_color,categories.icon FROM articles FULL JOIN categories ON categories.id = articles.category_id WHERE articles.user_id=%s ORDER BY articles.created_at DESC"
         sqldata = (user_id, )
 
         c = db.cursor('blog', sql, sqldata)

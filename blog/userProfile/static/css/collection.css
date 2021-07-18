@@ -1,0 +1,46 @@
+.categories-collection h5 {
+  margin: 1rem;
+}
+
+.articles-collection h5 {
+  margin: 1rem;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: auto auto auto;
+}
+.category-card {
+  padding: 0.5rem;
+  font-size: 18px;
+  display: flex;
+  margin: 20px;
+  border-radius: 5px;
+}
+
+.category-card span {
+  margin-left: 0.5rem;
+}
+
+.article-card {
+  padding: 0.5rem;
+  font-size: 18px;
+  background-color: #fff;
+  box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+}
+
+.article-card .headline {
+  display: flex;
+  justify-content: space-between;
+}
+
+.article-card .category {
+  width: fit-content;
+  border-radius: 5px;
+  margin-top: 0.2rem;
+}
+
+.article-card .category i {
+  margin-right: 0.5rem;
+}

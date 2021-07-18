@@ -93,6 +93,9 @@
     font-size: 18px;
     
   }
+
+
+
 </style>
 {% endblock styles %} {% block content %}
 <div class="container bg-white border profile-container">
@@ -123,11 +126,11 @@
         <ul>
           {% if is_blogger %}
           <li onclick="javascript: navigate('/profile/')" {% if page_name == "Your Blog" %} class="active" {% endif %}>Your Blog</li>
+          <li onclick="javascript: navigate('/profile/collection')" {% if page_name == "Collection" %} class="active" {% endif %}>Collection</li>
           <li onclick="javascript: navigate('/profile/add-article/')" {% if page_name == "Add Article" %} class="active" {% endif %}>Add Article</li>
           <li onclick="javascript: navigate('/profile/add-category/')" {% if page_name == "Add Category" %} class="active" {% endif %}>Add Category</li>
           <li onclick="javascript: navigate('/profile/inbox/')" {% if page_name == "Inbox" %} class="active" {% endif %}>Inbox</li>
           <li onclick="javascript: navigate('/profile/statistics/')" {% if page_name == "Statistics" %} class="active" {% endif %}>Statistics</li>
-          <li onclick="javascript: navigate('/profile/collection')" {% if page_name == "Collection" %} class="active" {% endif %}>Collection</li>
           <li onclick="javascript: navigate('/profile/edit-profile/')" {% if page_name == "Edit Profile" %} class="active" {% endif %}>Edit Profile</li>
           <li onclick="javascript: navigate('/profile/settings/')" {% if page_name == "Settings" %} class="active" {% endif %}>Settings</li>
           {% else %}
@@ -157,5 +160,4 @@
 </div>
 {% endblock content %} {% block scripts %} {{ showmessagemodal }}
 <script src="{% static 'js/profile.js' %}"></script>
-<script src="{% static 'js/routes.js' %}"></script>
 {% endblock scripts %}

@@ -59,11 +59,11 @@ class CheckIfUsernameExists(APIView):
     def post(self, request):
 
         username = request.data.get('username')
-
+        print(username)
         u = auth.User()
         user = u.checkIfUsernameExists(username)
-
         if len(user) > 0:
+            print(user)
             return Response('Username does already exists')
         return Response('',status=status.HTTP_200_OK) 
 
@@ -74,7 +74,6 @@ class CheckIfEmailExists(APIView):
 
         u = auth.User()
         user = u.checkIfEmailExists(email)
-
         if len(user) > 0:
             return Response('Email does already exists')
         return Response('',status=status.HTTP_200_OK) 
@@ -82,6 +81,8 @@ class CheckIfEmailExists(APIView):
 class ValidatePassword(APIView):
     def post(self, request):
         password = request.data.get('password')
+        print(password)
         v = validate.password_check(password)
+        print(v)
         return Response(v)
 
