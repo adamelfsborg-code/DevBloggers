@@ -26,10 +26,12 @@ class PostUser(APIView):
             'username': request.data.get('username', ''),
             'is_blogger': request.data.get('is_blogger', ''),
             'email': request.data.get('email', ''),
-            'password': request.data.get('password', '')
+            'password': request.data.get('password', ''),
+            'profile_image': request.data.get('profile_image', '')
         }
         u = auth.User()
         user = u.createUser(**kwargs)
+        print(user)
         if 'no results to fetch' in user:
             if not self.request.session.exists(self.request.session.session_key):
                 self.request.session.create()
@@ -86,3 +88,18 @@ class ValidatePassword(APIView):
         print(v)
         return Response(v)
 
+
+class CheckCorrectPassword(APIView):
+    def post(self, request):
+
+        kwargs = {
+            'id': request.data.get('id'),
+            'password': request.data.get('password')
+        }
+
+        u = auth.User()
+        user = u.check_correct_password(**kwargs)
+
+        if len(user) > 0:
+            return Response('200', status=status.HTTP_200_OK)
+        return Response('400',status=status.HTTP_400_BAD_REQUEST) 

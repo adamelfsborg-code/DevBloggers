@@ -7,6 +7,9 @@ from django.views import View
 from rest_framework.views import APIView
 from django.template.loader import get_template
 import json
+
+import urllib.parse as urlparse
+from urllib.parse import parse_qs
 # Create your views here.
 
 class UserProfile(View):
@@ -145,7 +148,17 @@ class Collection(View):
                 profile_image = token[i]['profile_image']
                 is_blogger = token[i]['is_blogger']
 
-        return render(request, 'userProfile/pages/collection.html',{'id': id, 'username': username, 'fullname': fullname, 'profile_image': profile_image, 'is_blogger': is_blogger,'email': email,'showmessagemodal': showmessagemodal, 'page_name': page_name })
+        u = uP.Profile()
+        articles_count = u.get_articles_count(id)
+        if len(articles_count) > 0:
+            for i,a in enumerate(articles_count):
+                count = articles_count[i]['count']
+            if count / 4 <= 1:
+                slides = 'None'
+            else:
+                slides = range(1,round(count / 4))
+
+            return render(request, 'userProfile/pages/collection.html',{'id': id, 'username': username, 'fullname': fullname, 'profile_image': profile_image, 'is_blogger': is_blogger,'email': email,'showmessagemodal': showmessagemodal, 'page_name': page_name, 'range': slides})
 
 class EditProfile(View):
     def get(self, request, *args, **kwargs):
@@ -280,11 +293,28 @@ class GetUserArticles(APIView):
         if not self.request.session.exists(self.request.session.session_key):
             return redirect('/auth/')
 
+        slide = int(request.GET.get('slide'))
         user_id = request.data.get('user_id')
 
+
+
+        limit = 4 * slide
+        if slide == 1:
+            offset = 0
+        else:
+            offset = limit -4
+
+        kwargs = {
+            'user_id': user_id,
+            'limit': limit,
+            'offset': offset
+        }
+
         u = uP.Profile()
-        profile = u.get_user_articles(user_id)
+        profile = u.get_user_articles(**kwargs)
+
 
         if len(profile) > 0:
             return Response({'msg': '200', 'items': profile}, status=status.HTTP_200_OK)
-        return Response({'msg': 'Categories not found'},status=status.HTTP_200_OK) 
+        return Response({'msg': 'Articles not found'},status=status.HTTP_200_OK) 
+

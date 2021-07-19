@@ -35,8 +35,8 @@ class User:
             sql = "INSERT INTO users (is_blogger, fullname,username,email,password) VALUES(%s,%s,%s,%s,%s)"
             sqldata = (kwargs['is_blogger'],kwargs['full_name'],kwargs['username'],kwargs['email'],kwargs['password'])
         else:
-            sql = "UPDATE users SET is_blogger=%s,fullname=%s,profile_image=%s,email=%s,password=%s WHERE id=%s"
-            sqldata = (kwargs['is_blogger'],kwargs['full_name'],kwargs['profile_image'],kwargs['email'],kwargs['password'],kwargs['id'])
+            sql = "UPDATE users SET is_blogger=%s,fullname=%s,username=%s, profile_image=%s,email=%s,password=%s WHERE id=%s"
+            sqldata = (kwargs['is_blogger'],kwargs['full_name'],kwargs['username'],kwargs['profile_image'],kwargs['email'],kwargs['password'],kwargs['id'])
         
         c = db.cursor('blog', sql, sqldata)
         cursor = c.connect()
@@ -67,6 +67,14 @@ class User:
     def logoutUser(self, id):
         sql = "UPDATE users SET token=null WHERE id=%s"
         sqldata = (id,)
+
+        c = db.cursor('blog', sql, sqldata)
+        cursor = c.connect()
+        return cursor 
+
+    def check_correct_password(self, **kwargs):
+        sql = "SELECT id FROM users WHERE password=%s AND id=%s"
+        sqldata = (kwargs['password'],kwargs['id'])
 
         c = db.cursor('blog', sql, sqldata)
         cursor = c.connect()

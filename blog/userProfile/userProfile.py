@@ -37,8 +37,17 @@ class Profile:
 
         return cursor
 
-    def get_user_articles(self, user_id):
-        sql = "SELECT articles.id as id,articles.user_id,blocks,publish_date,categories.id as category_id, categories.name, categories.background_color, categories.text_color,categories.icon FROM articles FULL JOIN categories ON categories.id = articles.category_id WHERE articles.user_id=%s ORDER BY articles.created_at DESC"
+    def get_user_articles(self, **kwargs):
+        sql = "SELECT   articles.id as id,articles.user_id,blocks,publish_date,categories.id as category_id, categories.name, categories.background_color, categories.text_color,categories.icon FROM articles FULL JOIN categories ON categories.id = articles.category_id WHERE articles.user_id=%s ORDER BY articles.created_at DESC LIMIT {0} OFFSET {1}".format(kwargs['limit'],kwargs['offset'])
+        sqldata = (kwargs['user_id'], )
+
+        c = db.cursor('blog', sql, sqldata)
+        cursor = c.connect()
+
+        return cursor
+
+    def get_articles_count(self, user_id):
+        sql = "SELECT COUNT(user_id) FROM articles WHERE user_id=%s GROUP BY user_id"
         sqldata = (user_id, )
 
         c = db.cursor('blog', sql, sqldata)

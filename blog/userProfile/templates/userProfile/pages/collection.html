@@ -12,10 +12,31 @@
 <div class="articles-collection">
   <h5>Articles</h5>
   <div class="container">
-    <div class="row"></div>
+    <div div class="row"></div>
   </div>
 </div>
 
-{% endblock profilepage %} {% block scripts %}
+{% if range != 'None' %}
+
+<div class="page-slider d-flex justify-content-center">
+  <input type="hidden" class="current_page" />
+  <nav aria-label="Page navigation example">
+    <ul class="pagination">
+      <li class="page-item" >
+        <a class="page-link" id="prevslide" onclick="javascript: prevSlide()">Previous</a>
+      </li>
+      {% for i in range %}
+      <li class="page-item">
+        <a class="page-link changeSlide" id={{i}} >{{i}}</a>
+      </li>
+      {% endfor %}
+      <li class="page-item">
+        <a class="page-link" onclick="javascript: nextSlide()">Next</a>
+      </li>
+    </ul>
+  </nav>
+</div>
+
+{% endif %} {% endblock profilepage %} {% block scripts %}
 <script src="{% static 'js/collection.js' %}"></script>
 {% endblock scripts %}
