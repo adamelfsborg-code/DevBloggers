@@ -99,9 +99,11 @@
 </style>
 {% endblock styles %} {% block content %}
 <div class="container bg-white border profile-container">
+  {% if page_name == 'Add Article' %}
   <div class="helper" onclick="javascript: showMessage('info', 'Press on the white area and then tab to get the toolbar')" >
     <i class="far fa-question-circle"></i>
   </div>
+  {% endif %}
   <div class="row profile-header border-bottom">
     <div class="col-9 offset-3 p-0">
       <h5 class="text-center mt-1">{{ page_name }}</h5>

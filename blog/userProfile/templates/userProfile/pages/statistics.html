@@ -1,1 +1,7 @@
-{% extends 'userProfile/profile.html' %} {% block profilepage %} {{page_name}} {% endblock profilepage %}
+{% extends 'userProfile/profile.html' %} {% load static %} {% block profilepage %}
+
+<canvas id="myChart"></canvas>
+{% endblock profilepage %} {% block scripts %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js@3.4.1/dist/chart.min.js"></script>
+<script src="{% static 'js/statistics.js' %}"></script>
+{% endblock scripts %}

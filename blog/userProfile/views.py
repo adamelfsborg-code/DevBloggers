@@ -7,7 +7,7 @@ from django.views import View
 from rest_framework.views import APIView
 from django.template.loader import get_template
 import json
-
+import math
 import urllib.parse as urlparse
 from urllib.parse import parse_qs
 # Create your views here.
@@ -156,8 +156,7 @@ class Collection(View):
             if count / 4 <= 1:
                 slides = 'None'
             else:
-                slides = range(1,round(count / 4))
-
+                slides = range(1,math.ceil(count / 4) + 1)
             return render(request, 'userProfile/pages/collection.html',{'id': id, 'username': username, 'fullname': fullname, 'profile_image': profile_image, 'is_blogger': is_blogger,'email': email,'showmessagemodal': showmessagemodal, 'page_name': page_name, 'range': slides})
 
 class EditProfile(View):
@@ -268,7 +267,6 @@ class CreateCategory(APIView):
         if len(profile) > 0:
             for i in profile:
                 if 'category_updated' not in i:
-                    print(profile)
                     id = i.get('id')
                     return Response({'msg': 'Category Created', 'id': id}, status=status.HTTP_200_OK)
                 return Response({'msg': 'Category Updated'},status=status.HTTP_200_OK)
