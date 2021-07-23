@@ -1,6 +1,77 @@
 {% extends 'userProfile/profile.html' %} {% load static %} {% block profilepage %}
 
-<canvas id="myChart"></canvas>
+<head>
+  <link rel="stylesheet" href="{% static 'css/statistics.css' %}" />
+</head>
+
+<div class="container-fluid">
+  <div class="row statistics">
+    <strong class="tag">Growth this week</strong>
+    <div class="col-12 d-flex justify-content-start week-forecast">
+      <div class="followers">
+        <span>Followers</span>
+        {% if statistics.followers == 0 %}
+        <h6>0</h6>
+        <span class="zero"
+          ><i class="fas fa-arrow-circle-right"></i>
+          <strong>0%</strong></span
+        >
+        {% else %}
+        <h6>{{statistics.followers.total}}</h6>
+        <span class="green"
+          ><i class="fas fa-arrow-circle-up"></i> <strong>+{{statistics.followers.percentage}}</strong></span
+        >
+        {% endif %}
+      </div>
+      <div class="readers">
+        <span>Readers</span>
+        {% if statistics.readers == 0 %}
+        <h6>0</h6>
+        <span class="zero"
+          ><i class="fas fa-arrow-circle-right"></i>
+          <strong>0%</strong></span
+        >
+        {% else %}
+        <h6>{{statistics.readers.total}}</h6>
+        <span class="green"
+          ><i class="fas fa-arrow-circle-up"></i> <strong>+{{statistics.readers.percentage}}</strong></span
+        >
+        {% endif %}
+      </div>
+      <div class="likes">
+        <span>Likes</span>
+        {% if statistics.likes == 0 %}
+        <h6>0</h6>
+        <span class="zero"
+          ><i class="fas fa-arrow-circle-right"></i>
+          <strong>0%</strong></span
+        >
+        {% else %}
+        <h6>{{statistics.likes.total}}</h6>
+        <span class="green"
+          ><i class="fas fa-arrow-circle-up"></i> <strong>+{{statistics.likes.percentage}}</strong></span
+        >
+        {% endif %}
+      </div>
+      <div class="comments">
+        <span>Comments</span>
+        {% if statistics.comments == 0 %}
+        <h6>0</h6>
+        <span class="zero"
+          ><i class="fas fa-arrow-circle-right"></i>
+          <strong>0%</strong></span
+        >
+        {% else %}
+        <h6>{{statistics.comments.total}}</h6>
+        <span class="green"
+          ><i class="fas fa-arrow-circle-up"></i> <strong>+{{statistics.comments.percentage}}</strong></span
+        >
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+<!-- <canvas id="myChart"></canvas> -->
 {% endblock profilepage %} {% block scripts %}
 <script src="https://cdn.jsdelivr.net/npm/chart.js@3.4.1/dist/chart.min.js"></script>
 <script src="{% static 'js/statistics.js' %}"></script>

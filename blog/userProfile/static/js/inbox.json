@@ -1,0 +1,8 @@
+{
+    "type": "like",
+    "message": "AdamDev liked your article",
+    "article_id": "47",
+    "user_id": "42",
+    "icon": "fas fa-heart",
+    "color": "blue"
+}

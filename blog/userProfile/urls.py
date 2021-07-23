@@ -15,5 +15,8 @@ urlpatterns = [
     path('create-category/', views.CreateCategory.as_view(), name='createcategory'),
     path('get-user-categories/', views.GetUserCategories.as_view(), name='getusercategories'),
     # path('get-user-articles/', views.GetUserArticles.as_view(), name='getuserarticles'),
-    path(r'get-user-articles/', views.GetUserArticles.as_view(), name='getuserarticles')
+    path(r'get-user-articles/', views.GetUserArticles.as_view(), name='getuserarticles'),
+    path('get-user-notifications/', views.GetUserNotifications.as_view(), name='getusernotifications'),
+    path('get-message-rooms/', views.GetMessageRooms.as_view(), name='getmessagerooms'),
+    path('get-messages/', views.GetMessages.as_view(), name='getmessages')
 ]

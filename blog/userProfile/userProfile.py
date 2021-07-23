@@ -54,3 +54,164 @@ class Profile:
         cursor = c.connect()
 
         return cursor
+
+    def get_followers_growth(self, **kwargs):
+        sql = "SELECT COUNT(following_user) FROM followers WHERE following_user=%s GROUP BY following_user"
+        sqldata = (kwargs['user_id'], )
+
+        c = db.cursor('blog', sql, sqldata)
+        cursor = c.connect()
+
+        if len(cursor) > 0:
+            for i in cursor:
+                total = i.get('count')
+        else:
+            return 0
+        
+        sql = "SELECT COUNT(following_user) FROM followers WHERE EXTRACT(week FROM created_at) = EXTRACT(week FROM timestamp %s) AND FOLLOWING_USER =%s GROUP BY following_user"
+        sqldata = (kwargs['date'],kwargs['user_id'])
+
+        c = db.cursor('blog', sql, sqldata)
+        cursor = c.connect()
+
+        if len(cursor) > 0:
+            for i in cursor:
+                growth = i.get('count')
+        else:
+            return 0
+
+        percentage  = int(growth) / int(total) 
+        followers = {
+            'percentage': "{:.0%}".format(percentage),
+            'total': total,
+        }
+
+        return followers
+    def get_readers_growth(self, **kwargs):
+        sql = "SELECT COUNT(blogger_id) FROM readers WHERE blogger_id=%s GROUP BY blogger_id"
+        sqldata = (kwargs['user_id'], )
+
+        c = db.cursor('blog', sql, sqldata)
+        cursor = c.connect()
+
+        if len(cursor) > 0:
+            for i in cursor:
+                total = i.get('count')
+        else:
+            return 0
+
+        sql = "SELECT COUNT(blogger_id) FROM readers WHERE EXTRACT(week FROM created_at) = EXTRACT(week FROM timestamp %s) AND blogger_id=%s GROUP BY blogger_id"
+        sqldata = (kwargs['date'],kwargs['user_id'])
+
+        c = db.cursor('blog', sql, sqldata)
+        cursor = c.connect()
+
+        if len(cursor) > 0:
+            for i in cursor:
+                growth = i.get('count')
+        else:
+            return 0
+
+        percentage = int(total) / int(growth)
+
+        readers = {
+            'percentage': "{:.0%}".format(percentage),
+            'total': total
+        }
+
+        return readers 
+
+    def get_likes_growth(self, **kwargs):
+        sql = "SELECT COUNT(blogger_id) FROM likes WHERE blogger_id=%s GROUP BY blogger_id"
+        sqldata = (kwargs['user_id'],)
+
+        c = db.cursor('blog', sql, sqldata)
+        cursor = c.connect()
+
+        if len(cursor) > 0:
+            for i in cursor:
+                total = i.get('count')
+        else:
+            return 0
+
+        sql = "SELECT COUNT(blogger_id) FROM likes WHERE EXTRACT(week FROM created_at) = EXTRACT(week FROM timestamp %s) AND blogger_id=%s GROUP BY blogger_id"
+        sqldata = (kwargs['date'],kwargs['user_id'])
+
+        c = db.cursor('blog', sql, sqldata)
+        cursor = c.connect()
+
+        if len(cursor) > 0:
+            for i in cursor:
+                growth = i.get('count')
+        else:
+            return 0
+
+        percentage = int(total) / int(growth)
+
+        likes = {
+            'percentage': "{:.0%}".format(percentage),
+            'total': total
+        }
+
+        return likes       
+
+    def get_comments_growth(self, **kwargs):
+        sql = "SELECT COUNT(blogger_id) FROM comments WHERE blogger_id=%s GROUP BY blogger_id"
+        sqldata = (kwargs['user_id'],)
+
+        c = db.cursor('blog', sql, sqldata)
+        cursor = c.connect()
+
+        if len(cursor) > 0:
+            for i in cursor:
+                total = i.get('count')
+        else:
+            return 0
+
+        sql = "SELECT COUNT(blogger_id) FROM comments WHERE EXTRACT(week FROM created_at) = EXTRACT(week FROM timestamp %s) AND blogger_id=%s GROUP BY blogger_id"
+        sqldata = (kwargs['date'],kwargs['user_id'])
+
+        c = db.cursor('blog', sql, sqldata)
+        cursor = c.connect()
+
+        if len(cursor) > 0:
+            for i in cursor:
+                growth = i.get('count')
+        else:
+            return 0
+
+        percentage = int(total) / int(growth)
+
+        comments = {
+            'percentage': "{:.0%}".format(percentage),
+            'total': total
+        }
+
+        return comments     
+
+    def get_notifications(self,user_id):
+        sql = "SELECT id,notification FROM notifications WHERE user_id=%s ORDER BY created_at DESC"
+        sqldata = (user_id, )
+
+        c = db.cursor('blog', sql, sqldata)
+        cursor = c.connect()
+
+        return cursor
+
+    def get_message_rooms(self,user_id):
+        sql = "SELECT message_rooms.id,is_unread,unread_user,u_1.id as u1_id ,u_1.username as u1_username ,u_1.profile_image as u1_profile_image,u_2.id as u2_id,u_2.username as u2_username ,u_2.profile_image as u2_profile_image FROM MESSAGE_ROOMS FULL JOIN users u_1 ON message_rooms.USER_1 = u_1.id FULL JOIN users u_2 ON message_rooms.USER_2 = u_2.id WHERE user_1=%s OR user_2=%s ORDER BY is_unread DESC"
+        sqldata = (user_id,user_id)
+
+        c = db.cursor('blog', sql, sqldata)
+        cursor = c.connect()
+
+        return cursor
+
+    def get_messages(self, room_id):
+        sql = "SELECT room_id,sender,receiver,message FROM messages WHERE room_id=%s"
+        sqldata = (room_id, )
+
+        c = db.cursor('blog', sql, sqldata)
+        cursor = c.connect()
+
+        return cursor

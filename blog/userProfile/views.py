@@ -10,6 +10,7 @@ import json
 import math
 import urllib.parse as urlparse
 from urllib.parse import parse_qs
+from datetime import datetime
 # Create your views here.
 
 class UserProfile(View):
@@ -126,7 +127,33 @@ class Statistics(View):
                 profile_image = token[i]['profile_image']
                 is_blogger = token[i]['is_blogger']
 
-        return render(request, 'userProfile/pages/statistics.html',{'id': id, 'username': username, 'fullname': fullname, 'profile_image': profile_image, 'is_blogger': is_blogger,'email': email,'showmessagemodal': showmessagemodal, 'page_name': page_name })
+        kwargs = {
+            'user_id': id,
+            'date': datetime.today().strftime('%Y-%m-%d')
+        }
+
+        statistics = {
+            'followers': {},
+            'readers': {},
+            'likes': {},
+            'comments': {},
+        }
+
+        u = uP.Profile()
+        followers_growth = u.get_followers_growth(**kwargs)
+        statistics['followers'] = followers_growth
+
+        readers_growth = u.get_readers_growth(**kwargs)
+        statistics['readers'] = readers_growth
+
+        likes_growth = u.get_likes_growth(**kwargs)
+        statistics['likes'] = likes_growth
+
+        comments_growth = u.get_comments_growth(**kwargs)
+        statistics['comments'] = comments_growth
+
+
+        return render(request, 'userProfile/pages/statistics.html',{'id': id, 'username': username, 'fullname': fullname, 'profile_image': profile_image, 'is_blogger': is_blogger,'email': email,'showmessagemodal': showmessagemodal, 'page_name': page_name, 'statistics': statistics })
             
 class Collection(View):
     def get(self, request, *args, **kwargs):
@@ -316,3 +343,45 @@ class GetUserArticles(APIView):
             return Response({'msg': '200', 'items': profile}, status=status.HTTP_200_OK)
         return Response({'msg': 'Articles not found'},status=status.HTTP_200_OK) 
 
+
+class GetUserNotifications(APIView):
+    def post(self, request):
+        if not self.request.session.exists(self.request.session.session_key):
+            return redirect('/auth/')
+
+        user_id = request.data.get('user_id')
+
+        u = uP.Profile()
+        profile = u.get_notifications(user_id)
+
+        if len(profile) > 0:
+            return Response({'msg': '200','items': profile}, status=status.HTTP_200_OK)
+        return Response({'msg': 'No Notifications'},status=status.HTTP_404_NOT_FOUND) 
+
+class GetMessageRooms(APIView):
+    def post(self, request):
+        if not self.request.session.exists(self.request.session.session_key):
+            return redirect('/auth/')
+
+        user_id = request.data.get('user_id')
+
+        u = uP.Profile()
+        profile = u.get_message_rooms(user_id)
+
+        if len(profile) > 0:
+            return Response({'msg': '200','items': profile}, status=status.HTTP_200_OK)
+        return Response({'msg': 'No Message Rooms'},status=status.HTTP_404_NOT_FOUND) 
+
+class GetMessages(APIView):
+    def post(self, request):
+        if not self.request.session.exists(self.request.session.session_key):
+            return redirect('/auth/')
+
+        room_id = request.data.get('room_id')
+
+        u = uP.Profile()
+        profile = u.get_messages(room_id)
+
+        if len(profile) > 0:
+            return Response({'msg': '200','items': profile}, status=status.HTTP_200_OK)
+        return Response({'msg': 'No Messages'},status=status.HTTP_404_NOT_FOUND) 

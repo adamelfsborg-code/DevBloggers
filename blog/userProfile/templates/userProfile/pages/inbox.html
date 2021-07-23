@@ -1,2 +1,21 @@
-{% extends 'userProfile/profile.html' %} {% block profilepage %} {{page_name}}
-{% endblock profilepage %}
+{% extends 'userProfile/profile.html' %} {% load static %} {% block profilepage %}
+<head>
+  <link rel="stylesheet" href="{% static 'css/inbox.css' %}" />
+</head>
+
+<div class="container-fluid">
+  <div class="row">
+    <h5 class="m-2" >Notifications</h5>
+    <div class="col-12 notifications"></div>
+  </div>
+  <div class="row">
+    <h5 class="m-2" >Messages</h5>
+    <div class="col-6 message-rooms"></div>
+    <div class="col-6 messages"></div>
+  </div>
+</div>
+
+{% endblock profilepage %} {% block scripts %}
+<script src="{% static 'js/inbox.js' %}"></script>
+<script src="{% static 'js/notifications.js' %}"></script>
+{% endblock scripts %}

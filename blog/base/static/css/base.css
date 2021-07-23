@@ -8,6 +8,15 @@ body {
   color: #363837;
 }
 
+::-webkit-scrollbar {
+  width: 0.5rem;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #639fab;
+  border-radius: 20px;
+}
+
 :root {
   --primary-color: #639fab;
   --text-color: #000000;

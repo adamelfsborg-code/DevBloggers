@@ -1,0 +1,55 @@
+.week-forecast {
+  background-color: #fffeff;
+  /* margin-top: 2rem; */
+  padding: 1rem;
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px;
+  border-bottom-left-radius: 20px;
+  box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.2);
+}
+
+.week-forecast .followers,
+.readers,
+.likes,
+.comments {
+  width: 300px;
+  padding: 0.5rem;
+  line-height: 1.5;
+  margin-left: 1rem;
+}
+
+.week-forecast .followers,
+.readers,
+.likes {
+  border-right: 1px solid #eee;
+}
+
+.week-forecast span {
+  color: #90949c;
+  font-weight: 500;
+}
+
+.week-forecast h6 {
+  font-weight: bold;
+  font-size: 30px;
+}
+
+.week-forecast .green {
+  color: #53b996;
+}
+
+.week-forecast .red {
+  color: #e17b73;
+}
+
+.statistics strong.tag {
+  background-color: #fffeff;
+  width: fit-content;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  margin-top: 1rem;
+  border-left: 1px solid #eee;
+  border-top: 1px solid #eee;
+  border-right: 1px solid #eee;
+  z-index: 2;
+}
