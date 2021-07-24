@@ -177,14 +177,16 @@ class Collection(View):
 
         u = uP.Profile()
         articles_count = u.get_articles_count(id)
+
+        slides = 'None'
+
         if len(articles_count) > 0:
             for i,a in enumerate(articles_count):
                 count = articles_count[i]['count']
-            if count / 4 <= 1:
-                slides = 'None'
-            else:
+            if not count / 4 <= 1:
                 slides = range(1,math.ceil(count / 4) + 1)
-            return render(request, 'userProfile/pages/collection.html',{'id': id, 'username': username, 'fullname': fullname, 'profile_image': profile_image, 'is_blogger': is_blogger,'email': email,'showmessagemodal': showmessagemodal, 'page_name': page_name, 'range': slides})
+
+        return render(request, 'userProfile/pages/collection.html',{'id': id, 'username': username, 'fullname': fullname, 'profile_image': profile_image, 'is_blogger': is_blogger,'email': email,'showmessagemodal': showmessagemodal, 'page_name': page_name, 'range': slides})
 
 class EditProfile(View):
     def get(self, request, *args, **kwargs):

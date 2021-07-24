@@ -6,12 +6,12 @@
   justify-content: start;
   cursor: pointer;
   border-radius: 10px;
-  background-color: #eee;
+  background-color: var(--background-color);
   margin-top: 0.5rem;
 }
 
 .room-row.unread {
-  background-color: aliceblue;
+  background-color: var(--seconday-background-color);
 }
 
 .room-row:hover {
@@ -38,7 +38,6 @@
 }
 
 .notification {
-  background-color: #ddd;
   width: 21rem;
   padding: 0.5rem;
   height: fit-content;
@@ -62,6 +61,5 @@
 .notification-orange {
   background-color: #485461;
   background-image: linear-gradient(315deg, #485461 0%, #28313b 74%);
-
   color: #fff;
 }

@@ -39,7 +39,7 @@
     padding: 0;
   }
   .profile-links ul li {
-    background-color: var(--text-color-white);
+    background-color: var(--secondary-background-color);
     padding: 0.5rem;
     margin: 0.5rem 0;
     cursor: pointer;
@@ -58,7 +58,7 @@
   }
 
   #editorjs {
-    background-color: #fff;
+    background-color: var(--background-color);
     margin-bottom: 5rem;
     min-height: 62vh;
   }
@@ -76,7 +76,7 @@
     right: 15%;
   }
   .ce-block__content {
-    background-color: #F8F8FF;
+    background-color: var(--secondary-background-color);
     padding: 0rem 2rem;
   }
   .profile-header {
@@ -94,13 +94,11 @@
     
   }
 
-
-
 </style>
 {% endblock styles %} {% block content %}
 <div class="container bg-white border profile-container">
   {% if page_name == 'Add Article' %}
-  <div class="helper" onclick="javascript: showMessage('info', 'Press on the white area and then tab to get the toolbar')" >
+  <div class="helper" onclick="javascript: showMessage('info', 'Press on the blue area and then tab to get the toolbar')" >
     <i class="far fa-question-circle"></i>
   </div>
   {% endif %}

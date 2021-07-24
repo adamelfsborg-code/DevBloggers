@@ -1,5 +1,5 @@
 .week-forecast {
-  background-color: #fffeff;
+  background-color: var(--background-color);
   /* margin-top: 2rem; */
   padding: 1rem;
   border-top-right-radius: 20px;

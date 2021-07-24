@@ -1,7 +1,100 @@
 {% extends 'base/index.html' %} {% load static %} {% block styles %}
-<style></style>
+<style>
+  .banner {
+    height: 35vh;
+    background-image: linear-gradient(
+        rgba(67, 127, 199, 0.6),
+        rgba(67, 127, 199, 0.6)
+      ),
+      url("/static/img/banner-bg.jpg");
+
+    position: relative;
+    border-radius: 5px;
+  }
+  .card {
+    position: absolute;
+    top: 10%;
+    left: 50%;
+    transform: translate(-50%, -10%);
+    color: var(--text-color-white);
+    background-color: transparent;
+    border: none;
+  }
+  .trending-categories h5 {
+    font-weight: bold;
+    border-bottom: 2px solid var(--primary-color);
+    width: fit-content;
+    margin-bottom: 1rem;
+  }
+  .categories {
+    display: flex;
+    justify-content: start;
+    flex-wrap: wrap;
+  }
+  .category_item {
+    margin-left: 1rem;
+    padding: 0.5rem;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    background-color: #fff;
+    box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.2);
+    color: #333;
+    width: fit-content;
+    min-width: 250px;
+    cursor: pointer;
+    margin-bottom: 1rem;
+  }
+  .category_item:hover {
+    background-color: var(--secondary-background-color);
+  }
+  .category_item i {
+    background-color: var(--primary-color);
+    width: 40px;
+    height: 40px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    color: #fff;
+    margin-left: 0.5rem;
+  }
+  .category_item div {
+    margin-left: 1rem;
+    display: flex;
+    flex-direction: column;
+  }
+  .category_item div span {
+    color: rgb(124, 124, 124);
+  }
+</style>
 {% endblock styles %} {% block content %}
 
-<h5>{{page_name}}</h5>
+<div class="row">
+  <div class="col-12">
+    <div class="banner">
+      <div class="card p-1">
+        <h4 class="text-center mt-5">DevBloggers</h4>
+        <div class="text text-center">
+          <p>Discover your favorite developers and their articles</p>
+        </div>
+        <div class="cta text-center mt-4">
+          <button class="btn btn-outline-light btn-sm">Discover</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-12">
+    <div class="trending-categories mt-5">
+      <h5>Categories</h5>
+      <div class="categories"></div>
+    </div>
+  </div>
+</div>
 
-{% endblock content %} {% block scripts %} {% endblock scripts %}
+{% endblock content %} {% block scripts %}
+<script src="{% static 'js/home.js' %}"></script>
+{% endblock scripts %}

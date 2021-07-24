@@ -26,13 +26,12 @@ function getCookie(name) {
   return cookieValue;
 }
 
-const getSQLData = async (url = "", data = {}) => {
+const getData = async (url = "") => {
   const response = await fetch(url, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(data),
   });
   return response.json();
 };
