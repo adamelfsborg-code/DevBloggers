@@ -30,15 +30,46 @@ class HomeView(View):
         return redirect('auth/')
 
 class GetTrendingCategories(APIView):
-    def get(self, request):
+    def post(self, request):
         if not self.request.session.exists(self.request.session.session_key):
             return redirect('auth/')
 
+        date = request.data.get('date')
+
         h = home.Home()
-        trending = h.get_trending_categories()
+        trending = h.get_trending_categories(date)
 
         if len(trending) > 0:
             return Response({'msg': '200', 'items': trending}, status=status.HTTP_200_OK)
         return Response({'msg': '404'}, status=status.HTTP_404_NOT_FOUND)
         
+class GetTrendingArticles(APIView):
+    def post(self, request):
+        if not self.request.session.exists(self.request.session.session_key):
+            return redirect('auth/')
 
+        date = request.data.get('date')
+
+        h = home.Home()
+        trending = h.get_trending_articles(date)
+
+        if len(trending) > 0:
+            return Response({'msg': '200', 'items': trending}, status=status.HTTP_200_OK)
+        return Response({'msg': '404'}, status=status.HTTP_404_NOT_FOUND) 
+
+class GetLastVisits(APIView):
+    def post(self, request):
+        if not self.request.session.exists(self.request.session.session_key):
+            return redirect('auth/')
+        
+        kwargs = {
+            'date': request.data.get('date'),
+            'user_id': request.data.get('user_id')
+        }
+
+        h = home.Home()
+        visit = h.get_last_visits(**kwargs)
+
+        if len(visit) > 0:
+            return Response({'msg': '200', 'items': visit}, status=status.HTTP_200_OK)
+        return Response({'msg': '404'}, status=status.HTTP_404_NOT_FOUND) 

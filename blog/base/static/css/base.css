@@ -16,6 +16,7 @@ body {
   background-color: var(--background-color);
   font-family: "Montserrat", sans-serif;
   color: #363837;
+  overflow-x: hidden;
 }
 
 ::-webkit-scrollbar {

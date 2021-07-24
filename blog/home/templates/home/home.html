@@ -26,7 +26,18 @@
     width: fit-content;
     margin-bottom: 1rem;
   }
+  .trending-articles h5 {
+    font-weight: bold;
+    border-bottom: 2px solid var(--primary-color);
+    width: fit-content;
+    margin-bottom: 1rem;
+  }
   .categories {
+    display: flex;
+    justify-content: start;
+    flex-wrap: wrap;
+  }
+  .articles {
     display: flex;
     justify-content: start;
     flex-wrap: wrap;
@@ -45,7 +56,24 @@
     cursor: pointer;
     margin-bottom: 1rem;
   }
+  .article_item {
+    margin-left: 1rem;
+    padding: 0.5rem;
+    border-radius: 10px;
+    align-items: center;
+    display: flex;
+    background-color: #fff;
+    box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.2);
+    color: #333;
+    width: fit-content;
+    min-width: 300px;
+    cursor: pointer;
+    margin-bottom: 1rem;
+  }
   .category_item:hover {
+    background-color: var(--secondary-background-color);
+  }
+  .article_item:hover {
     background-color: var(--secondary-background-color);
   }
   .category_item i {
@@ -60,13 +88,73 @@
     color: #fff;
     margin-left: 0.5rem;
   }
+  .article_item i {
+    background-color: var(--secondary-background-color);
+    width: 40px;
+    height: 40px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    color: #333;
+    margin-left: 0.5rem;
+  }
   .category_item div {
-    margin-left: 1rem;
+    margin: 0 1rem;
     display: flex;
     flex-direction: column;
   }
+  .article_item div {
+    margin: 0 1rem;
+  }
+  .article_item .footer {
+    display: flex;
+    justify-content: space-between;
+    margin: 0;
+  }
+  .article_item div small,
+  span {
+    color: rgb(124, 124, 124);
+  }
   .category_item div span {
     color: rgb(124, 124, 124);
+  }
+
+  .visits {
+    justify-content: start;
+    flex-wrap: wrap;
+    overflow-x: hidden;
+    height: 40vh;
+  }
+  .last-visits h5 {
+    font-weight: bold;
+    border-bottom: 2px solid var(--primary-color);
+    width: fit-content;
+    margin-bottom: 1rem;
+  }
+  .visit_item {
+    margin-left: 1rem;
+    width: 200px;
+    height: 200px;
+    box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+  }
+  .visit_item:hover {
+    background-color: var(--secondary-background-color);
+  }
+  .visit_item img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin: 1rem 0;
+  }
+  .visit_item strong {
+    margin-top: 0.5rem;
   }
 </style>
 {% endblock styles %} {% block content %}
@@ -91,6 +179,22 @@
     <div class="trending-categories mt-5">
       <h5>Categories</h5>
       <div class="categories"></div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-12">
+    <div class="trending-articles mt-5">
+      <h5>Articles</h5>
+      <div class="articles"></div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-12">
+    <div class="last-visits mt-5">
+      <h5>Last Visits</h5>
+      <div class="visits"></div>
     </div>
   </div>
 </div>
