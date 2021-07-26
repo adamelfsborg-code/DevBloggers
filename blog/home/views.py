@@ -29,6 +29,48 @@ class HomeView(View):
             return render(request, 'home/home.html', {'id': id, 'username': username, 'fullname': fullname, 'profile_image': profile_image, 'is_blogger': is_blogger,'email': email, 'page_name': page_name})
         return redirect('auth/')
 
+class SearchView(View):
+    def get(self, request,*args, **kwargs):
+        if not self.request.session.exists(self.request.session.session_key):
+            return redirect('auth/')
+
+        page_name = 'Search'
+
+        u = auth.User()
+        token = u.getUser(self.request.session.session_key)
+        if len(token) > 0:
+            for i,a in enumerate(token):
+                id = token[i]['id']
+                username = token[i]['username']
+                fullname = token[i]['fullname']
+                email = token[i]['email']
+                profile_image = token[i]['profile_image']
+                is_blogger = token[i]['is_blogger']
+                
+            return render(request, 'home/search.html', {'id': id, 'username': username, 'fullname': fullname, 'profile_image': profile_image, 'is_blogger': is_blogger,'email': email, 'page_name': page_name})
+        return redirect('auth/')
+
+class LatestArticlesView(View):
+    def get(self, request,*args, **kwargs):
+        if not self.request.session.exists(self.request.session.session_key):
+            return redirect('auth/')
+
+        page_name = 'Latest articles'
+
+        u = auth.User()
+        token = u.getUser(self.request.session.session_key)
+        if len(token) > 0:
+            for i,a in enumerate(token):
+                id = token[i]['id']
+                username = token[i]['username']
+                fullname = token[i]['fullname']
+                email = token[i]['email']
+                profile_image = token[i]['profile_image']
+                is_blogger = token[i]['is_blogger']
+                
+            return render(request, 'home/latest-articles.html', {'id': id, 'username': username, 'fullname': fullname, 'profile_image': profile_image, 'is_blogger': is_blogger,'email': email, 'page_name': page_name})
+        return redirect('auth/')
+
 class GetTrendingCategories(APIView):
     def post(self, request):
         if not self.request.session.exists(self.request.session.session_key):
@@ -73,3 +115,60 @@ class GetLastVisits(APIView):
         if len(visit) > 0:
             return Response({'msg': '200', 'items': visit}, status=status.HTTP_200_OK)
         return Response({'msg': '404'}, status=status.HTTP_404_NOT_FOUND) 
+
+class GetBloggers(APIView):
+    def post(self, request):
+        if not self.request.session.exists(self.request.session.session_key):
+            return redirect('auth/')
+
+        param = request.data.get('param')
+
+        h = home.Home()
+        search = h.get_bloggers_search(param)
+
+        if len(search) > 0:
+            return Response({'msg': '200', 'items': search}, status=status.HTTP_200_OK)
+        return Response({'msg': 'no items'}, status=status.HTTP_200_OK)
+
+class GetCategories(APIView):
+    def post(self, request):
+        if not self.request.session.exists(self.request.session.session_key):
+            return redirect('auth/')
+        
+        param = request.data.get('param')
+        h = home.Home()
+        search = h.get_categories_search(param)
+
+        if len(search) > 0:
+            return Response({'msg': '200', 'items': search}, status=status.HTTP_200_OK)
+        return Response({'msg': 'no items'}, status=status.HTTP_200_OK)
+
+class GetArticles(APIView):
+    def post(self, request):
+        if not self.request.session.exists(self.request.session.session_key):
+            return redirect('auth/')
+        
+        param = request.data.get('param')
+        h = home.Home()
+        search = h.get_articles_search(param)
+
+        if len(search) > 0:
+            return Response({'msg': '200', 'items': search}, status=status.HTTP_200_OK)
+        return Response({'msg': 'no items'}, status=status.HTTP_200_OK)
+
+class GetLatestArticles(APIView):
+    def post(self, request):
+        if not self.request.session.exists(self.request.session.session_key):
+            return redirect('auth/')
+        
+        kwargs = {
+            'followers_only':request.data.get('followersOnly') ,
+            'user_id': request.data.get('user_id')
+        }
+        
+        h = home.Home()
+        search = h.get_latest_articles(**kwargs)
+
+        if len(search) > 0:
+            return Response({'msg': '200', 'items': search}, status=status.HTTP_200_OK)
+        return Response({'msg': 'no items'}, status=status.HTTP_200_OK)
