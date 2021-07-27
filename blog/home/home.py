@@ -86,3 +86,12 @@ class Home:
         cursor = c.connect()
 
         return cursor 
+    
+    def get_articles_count(self, category_name):
+        sql = "SELECT COUNT(*) FROM articles INNER JOIN categories ON articles.category_id = categories.id where categories.name=%s"
+        sqldata = (category_name,)
+        
+        c = db.cursor('blog', sql, sqldata)
+        cursor = c.connect()
+
+        return cursor 

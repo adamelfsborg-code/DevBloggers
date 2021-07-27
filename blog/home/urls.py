@@ -14,5 +14,6 @@ urlpatterns = [
     path('get-articles/', views.GetArticles.as_view(), name='getarticles'),
     path('get-latest-articles/', views.GetLatestArticles.as_view(), name='getlatestarticles'),
     path('get-articles-page/', views.GetArticlesByCategory.as_view(), name='getarticlesbycategory'),
-    path('get-category-by-name/', views.GetCategoryByName.as_view(), name='getcategorybyname')
+    path('get-category-by-name/', views.GetCategoryByName.as_view(), name='getcategorybyname'),
+    path('get-articles-count/', views.GetArticlesCount.as_view(), name='getarticlescount')
 ]

@@ -119,13 +119,28 @@ class GetCategoryByName(APIView):
         
         category_name =  request.data.get('category')
         
-
         h = home.Home()
         category = h.category(category_name)
 
         if len(category) > 0:
             return Response({'msg': '200', 'items': category}, status=status.HTTP_200_OK)
         return Response({'msg': '404'}, status=status.HTTP_404_NOT_FOUND)   
+
+class GetArticlesCount(APIView):
+    def post(self, request):
+        if not self.request.session.exists(self.request.session.session_key):
+            return redirect('auth/')
+            
+        
+        category_name =  request.data.get('category')
+        
+        h = home.Home()
+        articles = h.get_articles_count(category_name)
+
+        if len(articles) > 0:
+            return Response({'msg': '200', 'items': articles}, status=status.HTTP_200_OK)
+        return Response({'msg': '404'}, status=status.HTTP_404_NOT_FOUND)   
+
 
 class GetTrendingCategories(APIView):
     def post(self, request):

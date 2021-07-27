@@ -5,11 +5,22 @@ $(document).on("ready", function () {
   getArticlesByCategoryData(category, page);
 });
 
+let state = {
+  artilcesCount: 0,
+  articles_limit: 10,
+};
+
 const getArticlesByCategoryData = async (category, page) => {
   const [categoryData, categoryError] = await getCategoryBanner(category);
   if (!categoryError) {
     const banner = await drawCategoryBanner(categoryData);
     $(".category_banner").append(banner.join(""));
+  }
+  const [articlesCountData, articlesCountError] = await getArtilcesCount(
+    category
+  );
+  if (!articlesCountError) {
+    await drawPaginationTool(articlesCountData, page);
   }
   const [articlesData, articlesError] = await getArticlesPage(category, page);
   if (articlesError !== "Empty") {
@@ -32,13 +43,23 @@ const getCategoryBanner = async (category) => {
   }
 };
 
+const getArtilcesCount = async (category) => {
+  try {
+    const data = await postData("/get-articles-count/", {
+      category: category,
+    });
+    return [data.items[0].count, null];
+  } catch (error) {
+    return [null, error];
+  }
+};
+
 const getArticlesPage = async (category, page) => {
-  const limit = page * 10;
-  const offset = limit - 10;
+  const offset = (page -= 1) * state.articles_limit;
   try {
     const data = await postData("/get-articles-page/", {
       category: category,
-      limit: limit,
+      limit: state.articles_limit,
       offset: offset,
     });
     if (data.msg !== "404") {
@@ -53,22 +74,37 @@ const getArticlesPage = async (category, page) => {
 
 const drawCategoryBanner = async (data) => {
   const category = [];
-  $.each(data, function (key, val) {
+  await $.each(data, function (key, val) {
     category.push(`
-            <div class="banner_item" style="background-color: ${val.background_color}; color: ${val.text_color}">
-                <div>
-                    <i class="${val.icon}"></i>
-                    <strong>${val.name}</strong>
-                </div>
+        <div class="banner_item" style="background-color: ${val.background_color}; color: ${val.text_color}">
+            <div>
+                <i class="${val.icon}"></i>
+                <strong>${val.name}</strong>
             </div>
-        `);
+        </div>
+    `);
   });
   return category;
 };
 
+const drawPaginationTool = async (data, page) => {
+  state.artilcesCount = data;
+  var newPage = parseInt(page);
+  if ((newPage -= 1) === 0) {
+    $(".prev-page").addClass("disabled");
+  } else {
+    $(".prev-page").removeClass("disabled");
+  }
+  if (state.articles_limit * page >= state.artilcesCount) {
+    $(".next-page").addClass("disabled");
+  } else {
+    $(".next-page").removeClass("disabled");
+  }
+};
+
 const drawArticlesPage = async (data) => {
   const articles = [];
-  $.each(data, function (key, val) {
+  await $.each(data, function (key, val) {
     articles.push(`
         <div class="article_item" id=${val.id}>
             <strong>${val.name}</strong>
