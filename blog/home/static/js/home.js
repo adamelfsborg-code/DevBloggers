@@ -58,7 +58,11 @@ const drawTrendingCategories = async (data) => {
   $.each(data, function (key, val) {
     categories.push(
       `
-      <div class="category_item" id=${val.name}>
+      <div class="category_item" id=${
+        val.name
+      } onclick="javascript: navigate('/articles/?category=${
+        val.name
+      }&page=${1}')" >
         <i class="${val.icon}"></i>
         <div>
           <strong>${val.name}</strong>

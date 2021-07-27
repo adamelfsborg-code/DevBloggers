@@ -1,0 +1,61 @@
+{% extends 'base/index.html' %} {% load static %} {% block styles %}
+<style>
+  .article_item {
+    display: flex;
+    flex-direction: column;
+    box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.2);
+    margin-bottom: 1rem;
+    padding: 1rem;
+    border-radius: 10px;
+    cursor: pointer;
+  }
+  .article_item:hover {
+    background-color: var(--secondary-background-color);
+  }
+  .article_item div {
+    display: flex;
+    justify-content: space-between;
+  }
+  .banner_item {
+    margin-bottom: 2rem;
+    padding: 1rem;
+    border-radius: 5px;
+  }
+  .banner_item div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+</style>
+{% endblock styles %} {% block content %}
+
+<div class="row">
+  <div class="col-6 offset-3">
+    <div class="category_banner"></div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-6 offset-3">
+    <div class="articles"></div>
+    <div class="page-slider d-flex justify-content-center">
+      <input type="hidden" class="current_page" />
+      <nav aria-label="Page navigation example">
+        <ul class="pagination">
+          <li class="page-item">
+            <a class="page-link" id="prevslide" onclick="javascript: prevPage()"
+              >Previous</a
+            >
+          </li>
+          <li class="page-item">
+            <a class="page-link" onclick="javascript: nextPage()">Next</a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+{% endblock content %} {% block scripts %}
+<script src="{% static 'js/articles.js' %}"></script>
+{% endblock scripts %}

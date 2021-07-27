@@ -71,6 +71,62 @@ class LatestArticlesView(View):
             return render(request, 'home/latest-articles.html', {'id': id, 'username': username, 'fullname': fullname, 'profile_image': profile_image, 'is_blogger': is_blogger,'email': email, 'page_name': page_name})
         return redirect('auth/')
 
+class ArticlesView(View):
+    def get(self, request, *args,**kwargs):
+        if not self.request.session.exists(self.request.session.session_key):
+            return redirect('auth/')
+
+        page_name = 'Articles'
+
+        u = auth.User()
+        token = u.getUser(self.request.session.session_key)
+        if len(token) > 0:
+            for i,a in enumerate(token):
+                id = token[i]['id']
+                username = token[i]['username']
+                fullname = token[i]['fullname']
+                email = token[i]['email']
+                profile_image = token[i]['profile_image']
+                is_blogger = token[i]['is_blogger']
+
+            return render(request, 'home/articles.html', {'id': id, 'username': username, 'fullname': fullname, 'profile_image': profile_image, 'is_blogger': is_blogger,'email': email, 'page_name': page_name})
+        return redirect('auth/')
+
+class GetArticlesByCategory(APIView):
+    def post(self, request):
+        if not self.request.session.exists(self.request.session.session_key):
+            return redirect('auth/')
+            
+        
+
+        kwargs = {
+            'category_name': request.data.get('category'),
+            'limit': request.data.get('limit'),
+            'offset': request.data.get('offset')
+        }
+
+        h = home.Home()
+        articles = h.articles(**kwargs)
+        if len(articles) > 0:
+            return Response({'msg': '200', 'items': articles}, status=status.HTTP_200_OK)
+        return Response({'msg': '404'}, status=status.HTTP_404_NOT_FOUND) 
+
+class GetCategoryByName(APIView):
+    def post(self, request):
+        if not self.request.session.exists(self.request.session.session_key):
+            return redirect('auth/')
+            
+        
+        category_name =  request.data.get('category')
+        
+
+        h = home.Home()
+        category = h.category(category_name)
+
+        if len(category) > 0:
+            return Response({'msg': '200', 'items': category}, status=status.HTTP_200_OK)
+        return Response({'msg': '404'}, status=status.HTTP_404_NOT_FOUND)   
+
 class GetTrendingCategories(APIView):
     def post(self, request):
         if not self.request.session.exists(self.request.session.session_key):

@@ -68,3 +68,21 @@ class Home:
         cursor = c.connect()
 
         return cursor 
+
+    def articles(self,**kwargs):
+        sql = "SELECT blocks -> 0 -> 'data' ->> 'text' AS name,publish_date,articles.id,users.username,articles.user_id FROM articles INNER JOIN users ON articles.user_id = users.id inner join categories on articles.category_id = categories.id where categories.name = %s order by ARTICLES.CREATED_AT desc limit %s offset %s"
+        sqldata = (kwargs['category_name'],kwargs['limit'],kwargs['offset'])
+
+        c = db.cursor('blog', sql, sqldata)
+        cursor = c.connect()
+
+        return cursor 
+
+    def category(self, name):
+        sql = "SELECT id,name,icon,background_color,text_color FROM categories WHERE name=%s LIMIT 1"
+        sqldata = (name,)
+
+        c = db.cursor('blog', sql, sqldata)
+        cursor = c.connect()
+
+        return cursor 
